@@ -1,0 +1,27 @@
+data "template_file" "startup_script" {
+  template = file("${path.module}/startup-script.tpl")
+}
+
+resource "google_compute_instance_from_machine_image" "app" {
+  count        = 3
+  provider     = google-beta
+  name         = "${var.prefix}-server-${count.index}"
+  machine_type = var.server-machine
+  zone         = var.gcp-zone
+
+  labels = local.labels
+
+  source_machine_image = var.server-image
+
+  metadata = {
+    serial-port-enable = true
+    startup-script     = data.template_file.startup_script.rendered
+  }
+
+  network_interface {
+    network    = var.server-network
+    subnetwork = var.server-subnetwork
+  }
+
+}
+

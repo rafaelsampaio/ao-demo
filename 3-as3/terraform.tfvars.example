@@ -1,0 +1,13 @@
+#BIG-IP
+#bigip-address = "x.x.x.x"
+bigip-admin  = ""
+bigip-passwd = ""
+
+#App
+#app-address  = "x.x.x.x"
+#app-node-ip  = "x.x.x.x"
+app-tenant    = ""
+app-name      = ""
+app-tag       = ""
+app-region    = ""
+app-node-port = ""

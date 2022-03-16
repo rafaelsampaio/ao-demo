@@ -1,0 +1,29 @@
+#General
+#Google Environment
+prefix      = "demo"
+gcp-project = ""
+gcp-region  = ""
+gcp-zone    = ""
+
+#BIG-IP
+bigip-admin   = ""
+bigip-address = ""
+bigip-passwd  = ""
+
+#App
+app-tenant          = "demo"
+app-name            = "demo"
+app-target-instance = ""
+app-target-network  = ""
+
+#Server
+server-machine    = ""
+server-image      = ""
+server-network    = ""
+server-subnetwork = ""
+
+#Tags
+tag-environment = "demo"
+tag-owner       = "demo"
+tag-group       = "demo"
+tag-application = "demo"

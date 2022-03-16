@@ -1,0 +1,19 @@
+#General
+#Google Environment
+prefix       = "DEMO"
+gcp-project  = ""
+gcp-region   = ""
+gcp-zone     = ""
+gcp-svc-acct = ""
+
+# BIG-IP
+bigip-passwd   = ""
+bigip-image    = "projects/f5-7626-networks-public/global/images/f5-bigip-16-1-2-1-0-0-10-payg-best-plus-25mbps-211222205833"
+bigip-machine  = "n2-standard-8"
+bigip-timezone = "UTC"
+
+# Labels
+tag-environment = ""
+tag-owner       = ""
+tag-group       = ""
+tag-application = ""
