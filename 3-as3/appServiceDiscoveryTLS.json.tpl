@@ -12,16 +12,17 @@
             "${app_name}": {
                 "class": "Application",
 
-                "${app_name}-http": {
-                    "class": "Service_HTTP",
-                    "remark": "${app_name}-HTTP-service",
+                "${app_name}-https": {
+                    "class": "Service_HTTPS",
+                    "remark": "${app_name}-HTTPS-service",
+                    "serverTLS": "${app_name}-tls",
+                    "pool": "${app_name}-pool-sd",
                     "allowVlans": [
                         "external"
                     ],
                     "virtualAddresses": [
                         "${app_address}"
                     ],
-                    "pool": "${app_name}-pool-sd",
                     "profileAnalytics": {
                         "use": "${app_name}-analytics-http"
                     },
@@ -32,6 +33,26 @@
                     "policyWAF": {
                         "use": "${app_name}-waf-policy"
                     }
+                },
+
+                "${app_name}-tls": {
+                    "class": "TLS_Server",
+                    "certificates": [{
+                      "certificate": "${app_name}-certificate"
+                    }],
+                    "ssl3Enabled": false,
+                    "sslEnabled": false,
+                    "tls1_0Enabled": false,
+                    "tls1_1Enabled": false,
+                    "tls1_2Enabled": true,
+                    "tls1_3Enabled": false
+                },
+
+                "${app_name}-certificate": {
+                    "class": "Certificate",
+                    "remark": "${app_name}-certificate",
+                    "certificate": "${app_certificate}",
+                    "privateKey": "${app_private_key}"
                 },
 
                 "${app_name}-pool-sd": {
@@ -89,7 +110,7 @@
                     "class": "WAF_Policy",
                     "remark": "${app_name}-WAF-policy",
                     "label": "${app_name}-WAF-policy",
-                    "url": "https://raw.githubusercontent.com/rafaelsampaio/ao-demo/main/3-as3/waf-policy.json",
+                    "url": "https://raw.githubusercontent.com/rafaelsampaio/ao-demo/main/3-as3/waf-policy.xml?token=GHSAT0AAAAAABSRVBTFNQQAYMVDASYWOQ42YRTMIQA",
                     "ignoreChanges": true
                 }
             }

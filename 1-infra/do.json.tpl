@@ -16,6 +16,11 @@
         
         "myNtp": {
             "class": "NTP",
+            "servers": [
+                "0.pool.ntp.org",
+                "1.pool.ntp.org",
+                "2.pool.ntp.org"
+            ],
             "timezone": "${timezone}"
         },
 
@@ -23,7 +28,8 @@
             "class": "Provision",
             "asm": "nominal",
             "avr": "nominal",
-            "ltm": "nominal"
+            "ltm": "nominal",
+            "fps": "nominal"
         },
 
         "dbVars": {
@@ -32,7 +38,7 @@
             "restjavad.useextramb": true,
             "ui.advisory.enabled": true,
             "ui.advisory.color": "green",
-            "ui.advisory.text": "Automation and Orchestration Toolchain Demo",
+            "ui.advisory.text": "Automation & Orchestration Toolchain Demo",
             "config.allow.rfc3927": "enable"
         },
 

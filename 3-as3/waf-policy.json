@@ -1,0 +1,491 @@
+{
+    "policy" : {
+       "applicationLanguage" : "utf-8",
+       "blocking-settings" : {
+          "evasions" : [
+             {
+                "description" : "Apache whitespace",
+                "enabled" : true
+             },
+             {
+                "description" : "IIS Unicode codepoints",
+                "enabled" : true
+             },
+             {
+                "description" : "Multiple decoding",
+                "enabled" : true,
+                "maxDecodingPasses" : 3
+             },
+             {
+                "description" : "%u decoding",
+                "enabled" : true
+             },
+             {
+                "description" : "Directory traversals",
+                "enabled" : true
+             },
+             {
+                "description" : "Bad unescape",
+                "enabled" : true
+             },
+             {
+                "description" : "Bare byte decoding",
+                "enabled" : true
+             },
+             {
+                "description" : "IIS backslashes",
+                "enabled" : true
+             }
+          ],
+          "violations" : [
+             {
+                "alarm" : true,
+                "block" : true,
+                "name" : "VIOL_ASM_COOKIE_HIJACKING"
+             },
+             {
+                "alarm" : true,
+                "block" : true,
+                "name" : "VIOL_FILETYPE"
+             },
+             {
+                "alarm" : true,
+                "block" : true,
+                "name" : "VIOL_LOGIN_URL_BYPASSED"
+             },
+             {
+                "alarm" : true,
+                "block" : true,
+                "name" : "VIOL_PARAMETER_NAME_METACHAR"
+             },
+             {
+                "alarm" : true,
+                "block" : true,
+                "name" : "VIOL_PARAMETER_VALUE_METACHAR"
+             },
+             {
+                "alarm" : true,
+                "block" : true,
+                "name" : "VIOL_POST_DATA_LENGTH"
+             },
+             {
+                "alarm" : true,
+                "block" : true,
+                "name" : "VIOL_QUERY_STRING_LENGTH"
+             },
+             {
+                "alarm" : true,
+                "block" : true,
+                "name" : "VIOL_REQUEST_LENGTH"
+             },
+             {
+                "alarm" : true,
+                "block" : true,
+                "name" : "VIOL_URL_LENGTH"
+             }
+          ]
+       },
+       "brute-force-attack-preventions" : [
+          {
+             "captchaBypassCriteria" : {
+                "action" : "alarm-and-drop",
+                "enabled" : true,
+                "threshold" : 5
+             },
+             "clientSideIntegrityBypassCriteria" : {
+                "action" : "alarm-and-captcha",
+                "enabled" : true,
+                "threshold" : 3
+             },
+             "detectionCriteria" : {
+                "action" : "alarm-and-captcha",
+                "credentialsStuffingMatchesReached" : 100,
+                "detectCredentialsStuffingAttack" : true,
+                "detectDistributedBruteForceAttack" : true,
+                "failedLoginAttemptsRateReached" : 100
+             },
+             "leakedCredentialsCriteria" : {
+                "action" : "alarm-and-blocking-page",
+                "enabled" : false
+             },
+             "loginAttemptsFromTheSameDeviceId" : {
+                "action" : "alarm-and-captcha",
+                "enabled" : false,
+                "threshold" : 3
+             },
+             "loginAttemptsFromTheSameIp" : {
+                "action" : "alarm-and-captcha",
+                "enabled" : true,
+                "threshold" : 20
+             },
+             "loginAttemptsFromTheSameUser" : {
+                "action" : "alarm-and-captcha",
+                "enabled" : true,
+                "threshold" : 3
+             },
+             "measurementPeriod" : 900,
+             "preventionDuration" : "3600",
+             "reEnableLoginAfter" : 3600,
+             "sourceBasedProtectionDetectionPeriod" : 3600,
+             "url" : {
+                "method" : "*",
+                "name" : "/#/login",
+                "protocol" : "http",
+                "type" : "explicit"
+             }
+          }
+       ],
+       "caseInsensitive" : false,
+       "data-guard" : {
+          "creditCardNumbers" : true,
+          "customPatterns" : false,
+          "enabled" : true,
+          "exceptionPatterns" : false,
+          "fileContentDetection" : false,
+          "lastCcnDigitsToExpose" : 4,
+          "lastSsnDigitsToExpose" : 4,
+          "maskData" : true,
+          "usSocialSecurityNumbers" : true
+       },
+       "description" : "Rapid Deployment Policy",
+       "enablePassiveMode" : false,
+       "enforcementMode" : "blocking",
+       "filetypes" : [
+          {
+             "allowed" : true,
+             "checkPostDataLength" : false,
+             "checkQueryStringLength" : false,
+             "checkRequestLength" : false,
+             "checkUrlLength" : false,
+             "name" : "no_ext",
+             "performStaging" : false,
+             "responseCheck" : false,
+             "type" : "explicit"
+          }
+       ],
+       "fullPath" : "/ao-demo/ao-app/ao-app-waf-policy",
+       "ip-intelligence" : {
+          "enabled" : true,
+          "ipIntelligenceCategories" : [
+             {
+                "alarm" : false,
+                "block" : false,
+                "category" : "Spam Sources",
+                "description" : "The Spam Sources category includes Tunneling Spam messages through proxy, anomalous SMTP activities, and Forum Spam activities."
+             },
+             {
+                "alarm" : true,
+                "block" : false,
+                "category" : "Cloud-based Services",
+                "description" : "The Cloud-based Services category includes IP addresses and networks that are used by cloud providers."
+             },
+             {
+                "alarm" : false,
+                "block" : false,
+                "category" : "Mobile Threats",
+                "description" : "The Mobile Threats category includes IP addresses of malicious and unwanted mobile applications."
+             },
+             {
+                "alarm" : true,
+                "block" : false,
+                "category" : "Tor Proxies",
+                "description" : "The Tor Proxies category includes IP addresses acting as exit nodes for the Tor Network. Exit nodes are the last point along the proxy chain and make a direct connection to the originator\u00e2\u0080\u0099s intended destination."
+             },
+             {
+                "alarm" : false,
+                "block" : false,
+                "category" : "Windows Exploits",
+                "description" : "The Windows Exploits category includes active IP address offering or distributing malware, shell code, rootkits, worms, and viruses."
+             },
+             {
+                "alarm" : true,
+                "block" : false,
+                "category" : "Web Attacks",
+                "description" : "The Web Attacks category includes cross site scripting, iFrame injection, SQL injection, cross domain injection, and domain password brute force."
+             },
+             {
+                "alarm" : true,
+                "block" : false,
+                "category" : "BotNets",
+                "description" : "The Botnets category includes Botnet C&C channels and an infected zombie machine controlled by a Bot master."
+             },
+             {
+                "alarm" : true,
+                "block" : false,
+                "category" : "Scanners",
+                "description" : "The Scanners category includes all reconnaissance, such as probes, host scan, domain scan, and password brute force."
+             },
+             {
+                "alarm" : true,
+                "block" : false,
+                "category" : "Denial of Service",
+                "description" : "The Denial of Services category includes DOS, DDOS, anomalous syn flood, and anomalous traffic detection."
+             },
+             {
+                "alarm" : false,
+                "block" : false,
+                "category" : "Infected Sources",
+                "description" : "The Infected Sources category includes IP addresses currently known to be infected with malware, and IP addresses with an average low Reputation Index score. Enabling this category prevents access from sources identified to contact malware distribution points."
+             },
+             {
+                "alarm" : false,
+                "block" : false,
+                "category" : "Phishing Proxies",
+                "description" : "The Phishing Proxies category includes IP addresses hosting phishing sites, and other kind of fraud activities such as Ad Click Fraud and Gaming fraud."
+             },
+             {
+                "alarm" : true,
+                "block" : false,
+                "category" : "Anonymous Proxy",
+                "description" : "The Anonymous Proxy category includes IP addresses that provide proxy and anonymizing services."
+             }
+          ]
+       },
+       "login-enforcement" : {
+          "authenticatedUrls" : [
+             "/#/privacy-security/",
+             "/#/wallet"
+          ]
+       },
+       "login-pages" : [
+          {
+             "accessValidation" : {
+                "cookieContains" : "",
+                "headerContains" : "",
+                "headerOmits" : "",
+                "parameterContains" : "",
+                "responseContains" : "",
+                "responseHttpStatus" : "",
+                "responseOmits" : "Invalid"
+             },
+             "authenticationType" : "form",
+             "passwordParameterName" : "password",
+             "url" : {
+                "method" : "*",
+                "name" : "/#/login",
+                "protocol" : "http",
+                "type" : "explicit"
+             },
+             "usernameParameterName" : "email"
+          }
+       ],
+       "name" : "ao-app-waf-policy",
+       "protocolIndependent" : false,
+       "server-technologies" : [
+          {
+             "serverTechnologyName" : "AngularJS"
+          },
+          {
+             "serverTechnologyName" : "Express.js"
+          },
+          {
+             "serverTechnologyName" : "JavaScript"
+          },
+          {
+             "serverTechnologyName" : "MongoDB"
+          },
+          {
+             "serverTechnologyName" : "Node.js"
+          },
+          {
+             "serverTechnologyName" : "SQLite"
+          },
+          {
+             "serverTechnologyName" : "jQuery"
+          }
+       ],
+       "session-tracking" : {
+          "delayBlocking" : {},
+          "sessionTrackingConfiguration" : {
+             "enableTrackingSessionHijackingByDeviceId" : true
+          }
+       },
+       "signature-sets" : [
+          {
+             "alarm" : true,
+             "block" : true,
+             "learn" : true,
+             "name" : "JavaScript Signatures (High/Medium Accuracy)",
+             "signatureSet" : {
+                "filter" : {
+                   "accuracyFilter" : "ge",
+                   "accuracyValue" : "medium",
+                   "hasCve" : "all",
+                   "lastUpdatedFilter" : "all",
+                   "riskFilter" : "all",
+                   "riskValue" : "all",
+                   "signatureType" : "all",
+                   "tagFilter" : "all",
+                   "userDefinedFilter" : "all"
+                },
+                "systems" : [
+                   {
+                      "name" : "JavaScript"
+                   }
+                ],
+                "type" : "filter-based"
+             }
+          },
+          {
+             "alarm" : true,
+             "block" : true,
+             "learn" : true,
+             "name" : "Node.js Signatures (High/Medium Accuracy)",
+             "signatureSet" : {
+                "filter" : {
+                   "accuracyFilter" : "ge",
+                   "accuracyValue" : "medium",
+                   "hasCve" : "all",
+                   "lastUpdatedFilter" : "all",
+                   "riskFilter" : "all",
+                   "riskValue" : "all",
+                   "signatureType" : "all",
+                   "tagFilter" : "all",
+                   "userDefinedFilter" : "all"
+                },
+                "systems" : [
+                   {
+                      "name" : "Node.js"
+                   }
+                ],
+                "type" : "filter-based"
+             }
+          },
+          {
+             "alarm" : true,
+             "block" : true,
+             "learn" : true,
+             "name" : "jQuery Signatures (High/Medium Accuracy)",
+             "signatureSet" : {
+                "filter" : {
+                   "accuracyFilter" : "ge",
+                   "accuracyValue" : "medium",
+                   "hasCve" : "all",
+                   "lastUpdatedFilter" : "all",
+                   "riskFilter" : "all",
+                   "riskValue" : "all",
+                   "signatureType" : "all",
+                   "tagFilter" : "all",
+                   "userDefinedFilter" : "all"
+                },
+                "systems" : [
+                   {
+                      "name" : "jQuery"
+                   }
+                ],
+                "type" : "filter-based"
+             }
+          },
+          {
+             "alarm" : true,
+             "block" : true,
+             "learn" : true,
+             "name" : "MongoDB Signatures (High/Medium Accuracy)",
+             "signatureSet" : {
+                "filter" : {
+                   "accuracyFilter" : "ge",
+                   "accuracyValue" : "medium",
+                   "hasCve" : "all",
+                   "lastUpdatedFilter" : "all",
+                   "riskFilter" : "all",
+                   "riskValue" : "all",
+                   "signatureType" : "all",
+                   "tagFilter" : "all",
+                   "userDefinedFilter" : "all"
+                },
+                "systems" : [
+                   {
+                      "name" : "MongoDB"
+                   }
+                ],
+                "type" : "filter-based"
+             }
+          },
+          {
+             "alarm" : true,
+             "block" : true,
+             "learn" : true,
+             "name" : "SQLite Signatures (High/Medium Accuracy)",
+             "signatureSet" : {
+                "filter" : {
+                   "accuracyFilter" : "ge",
+                   "accuracyValue" : "medium",
+                   "hasCve" : "all",
+                   "lastUpdatedFilter" : "all",
+                   "riskFilter" : "all",
+                   "riskValue" : "all",
+                   "signatureType" : "all",
+                   "tagFilter" : "all",
+                   "userDefinedFilter" : "all"
+                },
+                "systems" : [
+                   {
+                      "name" : "SQLite"
+                   }
+                ],
+                "type" : "filter-based"
+             }
+          }
+       ],
+       "signature-settings" : {
+          "signatureStaging" : false
+       },
+       "softwareVersion" : "16.1.2",
+       "template" : {
+          "name" : "POLICY_TEMPLATE_RAPID_DEPLOYMENT"
+       },
+       "type" : "security",
+       "urls" : [
+          {
+             "attackSignaturesCheck" : true,
+             "clickjackingProtection" : false,
+             "description" : "",
+             "disallowFileUploadOfExecutables" : false,
+             "html5CrossOriginRequestsEnforcement" : {
+                "enforcementMode" : "disabled"
+             },
+             "isAllowed" : true,
+             "mandatoryBody" : false,
+             "method" : "*",
+             "methodsOverrideOnUrlCheck" : false,
+             "name" : "/#/login",
+             "performStaging" : true,
+             "protocol" : "http",
+             "type" : "explicit",
+             "urlContentProfiles" : [
+                {
+                   "headerName" : "*",
+                   "headerOrder" : "default",
+                   "headerValue" : "*",
+                   "type" : "apply-value-and-content-signatures"
+                },
+                {
+                   "headerName" : "Content-Type",
+                   "headerOrder" : "1",
+                   "headerValue" : "*form*",
+                   "type" : "form-data"
+                },
+                {
+                   "contentProfile" : {
+                      "name" : "Default"
+                   },
+                   "headerName" : "Content-Type",
+                   "headerOrder" : "2",
+                   "headerValue" : "*json*",
+                   "type" : "json"
+                },
+                {
+                   "contentProfile" : {
+                      "name" : "Default"
+                   },
+                   "headerName" : "Content-Type",
+                   "headerOrder" : "3",
+                   "headerValue" : "*xml*",
+                   "type" : "xml"
+                }
+             ]
+          }
+       ]
+    }
+ }
+ 

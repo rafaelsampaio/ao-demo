@@ -7,10 +7,6 @@ terraform {
       source  = "hashicorp/google"
       version = "~> 4.14"
     }
-    google-beta = {
-      source  = "hashicorp/google-beta"
-      version = "~> 4.14"
-    }
   }
 }
 
@@ -20,15 +16,10 @@ provider "google" {
   region  = var.gcp-region
   zone    = var.gcp-zone
 }
-provider "google-beta" {
-  project = var.gcp-project
-  region  = var.gcp-region
-  zone    = var.gcp-zone
-}
 
 #Other
 data "http" "myip" {
-  url = "https://text.ipv4.wtfismyip.com"
+  url = "https://ifconfig.io/ip"
 
   request_headers = {
     Accept = "text/plain"

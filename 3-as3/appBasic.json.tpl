@@ -11,9 +11,9 @@
             "class": "Tenant",
             "${app_name}": {
                 "class": "Application",
+
                 "${app_name}-http-80": {
                     "class": "Service_HTTP",
-                    "label": "${app_name}-service",
                     "remark": "${app_name}-HTTP-service",
                     "allowVlans": [
                         "external"
@@ -24,6 +24,7 @@
                     "pool": "${app_name}-pool",
                     "snat": "auto"
                 },
+                
                 "${app_name}-pool": {
                     "class": "Pool",
                     "monitors": [
