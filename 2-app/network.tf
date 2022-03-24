@@ -16,7 +16,6 @@ resource "google_compute_forwarding_rule" "app_fwd_rule" {
   name       = "${var.prefix}-app-fwd-rule"
   target     = google_compute_target_instance.app_target.id
   ip_address = google_compute_address.app_address.address
-  #port_range = "80"
   labels     = local.labels
 }
 
