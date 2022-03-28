@@ -44,6 +44,10 @@
                "name" : "VIOL_ASM_COOKIE_HIJACKING"
             },
             {
+               "block" : false,
+               "name" : "VIOL_DATA_GUARD"
+            },
+            {
                "alarm" : true,
                "block" : true,
                "name" : "VIOL_FILETYPE"
