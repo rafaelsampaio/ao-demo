@@ -110,7 +110,7 @@
                     "class": "WAF_Policy",
                     "remark": "${app_name}-WAF-policy",
                     "label": "${app_name}-WAF-policy",
-                    "url": "https://raw.githubusercontent.com/rafaelsampaio/ao-demo/main/3-as3/waf-policy.xml?token=GHSAT0AAAAAABSRVBTFNQQAYMVDASYWOQ42YRTMIQA",
+                    "url": "https://raw.githubusercontent.com/rafaelsampaio/ao-demo/main/3-as3/waf-policy.json?token=GHSAT0AAAAAABSRVBTFEMC4HZYVUTVHL6LMYSB5LGQ",
                     "ignoreChanges": true
                 }
             }
