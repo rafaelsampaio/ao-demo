@@ -32,7 +32,13 @@
                     "snat": "auto",
                     "policyWAF": {
                         "use": "${app_name}-waf-policy"
-                    }
+                    },
+                    "securityLogProfiles": [
+                        {
+                            "use": "${app_name}-app-security-logging"
+                        }
+                        
+                    ]
                 },
 
                 "${app_name}-tls": {
@@ -114,10 +120,10 @@
                     "ignoreChanges": true
                 },
 
-                "${app_name}-security-logging": {
+                "${app_name}-app-security-logging": {
                     "class": "Security_Log_Profile",
-                    "label": "${app_name}-local-AppSecurity-logging",
-                    "remark": "${app_name}-local-AppSecurity-logging",
+                    "label": "${app_name}-app-illegal_staged_response-local",
+                    "remark": "${app_name}-app-illegal_staged_response-local",
                     "application": {
                         "localStorage": true,
                         "responseLogging": "illegal",
