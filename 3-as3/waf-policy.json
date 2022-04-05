@@ -167,7 +167,6 @@
             "type" : "explicit"
          }
       ],
-      "fullPath" : "/ao-demo/ao-app/ao-app-waf-policy",
       "ip-intelligence" : {
          "enabled" : true,
          "ipIntelligenceCategories" : [
@@ -273,8 +272,15 @@
             "usernameParameterName" : "email"
          }
       ],
-      "name" : "ao-app-waf-policy",
       "protocolIndependent" : false,
+      "response-pages" : [
+         {
+            "ajaxActionType" : "alert-popup",
+            "ajaxEnabled" : true,
+            "ajaxPopupMessage" : "Not today, hacker! Your support ID is: <%TS.request.ID()%>",
+            "responsePageType" : "ajax"
+         }
+      ],
       "server-technologies" : [
          {
             "serverTechnologyName" : "AngularJS"
