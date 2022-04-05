@@ -112,7 +112,20 @@
                     "label": "${app_name}-WAF-policy",
                     "url": "https://raw.githubusercontent.com/rafaelsampaio/ao-demo/main/3-as3/waf-policy.json",
                     "ignoreChanges": true
-                }
+                },
+
+                "${app_name}-security-logging": {
+                    "class": "Security_Log_Profile",
+                    "label": "${app_name}-local-AppSecurity-logging",
+                    "remark": "${app_name}-local-AppSecurity-logging",
+                    "application": {
+                        "localStorage": true,
+                        "responseLogging": "illegal",
+                        "storageFilter": {
+                            "requestType": "illegal-including-staged-signatures"
+                        }
+                    }
+                }                
             }
         }
     }
