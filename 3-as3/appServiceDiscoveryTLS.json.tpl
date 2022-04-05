@@ -33,6 +33,9 @@
                     "policyWAF": {
                         "use": "${app_name}-waf-policy"
                     },
+                    "profileDOS": {
+                        "use": "${app_name}-app-dos"
+                    },
                     "securityLogProfiles": [
                         {
                             "use": "${app_name}-app-security-logging"
@@ -70,7 +73,7 @@
                         {
                             "servicePort": ${app_node_port},
                             "addressDiscovery": "gce",
-                            "updateInterval": 30,
+                            "updateInterval": 10,
                             "tagKey": "application",
                             "tagValue": "${app_tag}",
                             "addressRealm": "private",
@@ -120,6 +123,35 @@
                     "ignoreChanges": true
                 },
 
+                "${app_name}-app-dos": {
+                    "class": "DOS_Profile",
+                    "application": {
+                        "class": "DOS_Profile_Application",
+                        "botDefense": {
+                            "mode": "off"
+                        },
+                        "botSignatures": {
+                            "checkingEnabled": true
+                        },
+                        "captchaResponse": {
+                            "failure": "You failed the CAPTCHA, bot!",
+                            "first": "Bot, are you human?"
+                        },
+                        "heavyURLProtection": {
+                            "automaticDetectionEnabled": "true"
+                        },
+                        "rateBasedDetection": {
+                            "operationMode": "transparent",
+                            "thresholdsMode": "automatic"
+                        },
+                        "stressBasedDetection": {
+                            "operationMode": "transparent",
+                            "thresholdsMode": "automatic"
+                        },
+                        "singlePageApplicationEnabled": true
+                    }
+                },
+
                 "${app_name}-app-security-logging": {
                     "class": "Security_Log_Profile",
                     "label": "${app_name}-app-illegal_staged_response-local",
@@ -131,7 +163,7 @@
                             "requestType": "illegal-including-staged-signatures"
                         }
                     }
-                }                
+                }
             }
         }
     }
