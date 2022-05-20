@@ -127,7 +127,7 @@
                     "class": "DOS_Profile",
                     "application": {
                         "botDefense": {
-                            "mode": "always"
+                            "mode": "off"
                         },
                         "botSignatures": {
                             "checkingEnabled": true

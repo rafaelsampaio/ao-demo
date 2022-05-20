@@ -46,7 +46,7 @@ data "template_file" "f5_as3_hackazon" {
   template = file("${path.module}/f5-as3-tls-sd-waf-ts.json.tpl")
 
   vars = {
-    app_tag         = "${var.prefix}-${var.tag_application}"
+    app_tag         = "${var.prefix}-hackazon"
     app_region      = var.gcp_region
     app_certificate = replace(tls_self_signed_cert.hackazon_cert.cert_pem, "/\n/", "\\n")
     app_private_key = replace(tls_private_key.hackazon_key.private_key_pem, "/\n/", "\\n")

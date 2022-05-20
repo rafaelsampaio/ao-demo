@@ -46,7 +46,7 @@ data "template_file" "f5_as3_dvwa" {
   template = file("${path.module}/f5-as3-tls-sd-waf-ts.json.tpl")
 
   vars = {
-    app_tag         = "${var.prefix}-${var.tag_application}"
+    app_tag         = "${var.prefix}-dvwa"
     app_region      = var.gcp_region
     app_certificate = replace(tls_self_signed_cert.dvwa_cert.cert_pem, "/\n/", "\\n")
     app_private_key = replace(tls_private_key.dvwa_key.private_key_pem, "/\n/", "\\n")

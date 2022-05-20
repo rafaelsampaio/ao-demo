@@ -37,11 +37,25 @@ data "http" "myip" {
 }
 
 locals {
-  app_labels = {
+  app_labels_dvwa = {
     owner       = "${var.prefix}-${var.tag_owner}"
     environment = "${var.prefix}-${var.tag_environment}"
     group       = "${var.prefix}-${var.tag_group}"
-    application = "${var.prefix}-${var.tag_application}"
+    application = "${var.prefix}-dvwa"
+    provider    = "${var.prefix}-terraform"
+  }
+  app_labels_hackazon = {
+    owner       = "${var.prefix}-${var.tag_owner}"
+    environment = "${var.prefix}-${var.tag_environment}"
+    group       = "${var.prefix}-${var.tag_group}"
+    application = "${var.prefix}-hackazon"
+    provider    = "${var.prefix}-terraform"
+  }
+  app_labels_juiceshop = {
+    owner       = "${var.prefix}-${var.tag_owner}"
+    environment = "${var.prefix}-${var.tag_environment}"
+    group       = "${var.prefix}-${var.tag_group}"
+    application = "${var.prefix}-juiceshop"
     provider    = "${var.prefix}-terraform"
   }
   general_labels = {
