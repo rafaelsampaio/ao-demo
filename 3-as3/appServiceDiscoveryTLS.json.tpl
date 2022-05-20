@@ -5,7 +5,7 @@
     "persist": true,
     "declaration": {
         "class": "ADC",
-        "schemaVersion": "3.34.0",
+        "schemaVersion": "3.36.0",
         "$schema": "https://raw.githubusercontent.com/F5Networks/f5-appsvcs-extension/master/schema/latest/as3-schema.json",
         "${app_tenant}": {
             "class": "Tenant",
@@ -35,7 +35,7 @@
                     },
                     "profileDOS": {
                         "use": "${app_name}-app-dos"
-                    },
+                    },                    
                     "securityLogProfiles": [
                         {
                             "use": "${app_name}-app-security-logging"
@@ -126,19 +126,14 @@
                 "${app_name}-app-dos": {
                     "class": "DOS_Profile",
                     "application": {
-                        "class": "DOS_Profile_Application",
                         "botDefense": {
                             "mode": "off"
                         },
                         "botSignatures": {
                             "checkingEnabled": true
                         },
-                        "captchaResponse": {
-                            "failure": "You failed the CAPTCHA, bot!",
-                            "first": "Bot, are you human?"
-                        },
                         "heavyURLProtection": {
-                            "automaticDetectionEnabled": "true"
+                            "automaticDetectionEnabled": true
                         },
                         "rateBasedDetection": {
                             "operationMode": "transparent",
