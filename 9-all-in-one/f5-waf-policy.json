@@ -1,0 +1,78 @@
+{
+   "$schema": "https://clouddocs.f5.com/products/waf-declarative-policy/_downloads/1ea282907775c0a30240d3d5da4c2708/schema_v16_1.json",
+   "policy": {
+      "name": "ao-demo-waf-policy",
+      "description": "Automation & Orchestration Toolchain WAF Policy",
+      "softwareVersion": "16.1.2",
+      "template": {
+         "name": "POLICY_TEMPLATE_COMPREHENSIVE"
+      },
+      "protocolIndependent": false,
+      "enablePassiveMode": false,
+      "caseInsensitive": false,
+      "behavioral-enforcement": {
+         "enableBehavioralEnforcement": true,
+         "enableBlockingHighAccuracySignatures": true,
+         "enableBlockingCveSignatures": true
+      },
+      "brute-force-attack-preventions": [
+         {
+            "bruteForceProtectionForAllLoginPages": true,
+            "url": {
+               "name": "*"
+            }
+         }
+      ],
+      "ip-intelligence": {
+         "enabled": true,
+         "ipIntelligenceCategories": [
+            {
+               "category": "Cloud-based Services",
+               "alarm": true,
+               "block": false
+            },
+            {
+               "category": "Tor Proxies",
+               "alarm": true,
+               "block": true
+            },
+            {
+               "category": "Web Attacks",
+               "alarm": true,
+               "block": true
+            },
+            {
+               "category": "BotNets",
+               "alarm": true,
+               "block": true
+            },
+            {
+               "category": "Scanners",
+               "alarm": true,
+               "block": false
+            },
+            {
+               "category": "Denial of Service",
+               "alarm": true,
+               "block": true
+            },
+            {
+               "category": "Anonymous Proxy",
+               "alarm": true,
+               "block": true
+            }
+         ]
+      },
+      "threat-campaign-settings": {
+         "threatCampaignStaging": false,
+         "threatCampaignEnforcementReadinessPeriod": 0
+      },
+      "response-pages":[
+         {
+            "responsePageType": "ajax",
+            "ajaxEnabled": true,
+            "ajaxActionType": "alert-popup"
+         }
+      ]
+   }
+}
