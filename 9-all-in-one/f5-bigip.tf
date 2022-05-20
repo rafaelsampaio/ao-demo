@@ -67,6 +67,7 @@ resource "google_compute_instance" "f5_bigip" {
     network    = google_compute_network.external_net.name
     subnetwork = google_compute_subnetwork.external_subnet.name
     network_ip = var.bigip_external_self
+    access_config {}
   }
 
   #nic2 Data interface 1.2 - internal

@@ -15,14 +15,6 @@
          "enableBlockingHighAccuracySignatures": true,
          "enableBlockingCveSignatures": true
       },
-      "brute-force-attack-preventions": [
-         {
-            "bruteForceProtectionForAllLoginPages": true,
-            "url": {
-               "name": "*"
-            }
-         }
-      ],
       "ip-intelligence": {
          "enabled": true,
          "ipIntelligenceCategories": [

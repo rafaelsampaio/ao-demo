@@ -7,8 +7,8 @@ resource "google_compute_address" "hackazon" {
 resource "google_compute_target_instance" "hackazon_target_bigip" {
   provider = google-beta
   name     = "${var.prefix}-hackazon-target-bigip"
-  network  = google_compute_network.external_net.name
-  instance = google_compute_instance.f5_bigip.name
+  network  = google_compute_network.external_net.self_link
+  instance = google_compute_instance.f5_bigip.id
 }
 
 resource "google_compute_forwarding_rule" "hackazon_fwd_rule" {

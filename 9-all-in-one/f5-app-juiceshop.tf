@@ -7,8 +7,8 @@ resource "google_compute_address" "juiceshop" {
 resource "google_compute_target_instance" "juiceshop_target_bigip" {
   provider = google-beta
   name     = "${var.prefix}-juiceshop-target-bigip"
-  network  = google_compute_network.external_net.name
-  instance = google_compute_instance.f5_bigip.name
+  network  = google_compute_network.external_net.self_link
+  instance = google_compute_instance.f5_bigip.id
 }
 
 resource "google_compute_forwarding_rule" "juiceshop_fwd_rule" {
