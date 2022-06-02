@@ -1,6 +1,6 @@
 {
     "$schema": "https://github.com/F5Networks/f5-declarative-onboarding/raw/master/src/schema/latest/base.schema.json",
-    "schemaVersion": "1.29.0",
+    "schemaVersion": "1.30.0",
     "class": "Device",
     "async": true,
     "Common": {
