@@ -1,1 +1,3 @@
-output "app-url" { value = "http://${var.app-address}" }
+output "app-url" {
+  value = "http://${var.app-address}"
+}

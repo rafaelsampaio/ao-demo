@@ -4,7 +4,6 @@ resource "tls_private_key" "app-private-key" {
 }
 
 resource "tls_self_signed_cert" "app-certificate" {
-  key_algorithm   = "ECDSA"
   private_key_pem = tls_private_key.app-private-key.private_key_pem
 
   subject {
