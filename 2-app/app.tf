@@ -3,7 +3,7 @@ data "template_file" "startup_script" {
 }
 
 resource "google_compute_instance_from_machine_image" "app" {
-  count        = 3
+  count        = 1
   provider     = google-beta
   name         = "${var.prefix}-server-${count.index}"
   machine_type = var.server-machine
