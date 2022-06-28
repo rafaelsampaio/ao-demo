@@ -24,12 +24,74 @@
             "timezone": "${timezone}"
         },
 
+        "external": {
+            "class": "VLAN",
+            "tag": 4094,
+            "mtu": 1460,
+            "interfaces": [
+                {
+                    "name": "1.1",
+                    "tagged": false
+                }
+            ]
+        },
+        "external-self": {
+            "class": "SelfIp",
+            "address": "${external_self}/32",
+            "vlan": "external",
+            "allowService": "none"
+        },
+        "external-gw-route": {
+            "class": "Route",
+            "network": "${external_gateway}/32",
+            "target": "external"
+        },
+        "external-vlan-route": {
+            "class": "Route",
+            "network": "${external_cidr}",
+            "gw": "${external_gateway}"
+        },
+        "default-route": {
+            "class": "Route",
+            "network": "default",
+            "gw": "${external_gateway}"
+        },
+
+        "internal": {
+            "class": "VLAN",
+            "tag": 4093,
+            "mtu": 1460,
+            "interfaces": [
+                {
+                    "name": "1.2",
+                    "tagged": false
+                }
+            ]
+        },
+        "internal-self": {
+            "class": "SelfIp",
+            "address": "${internal_self}/32",
+            "vlan": "internal",
+            "allowService": "default"
+        },
+        "internal-gw-route": {
+            "class": "Route",
+            "network": "${internal_gateway}/32",
+            "target": "internal"
+        },
+        "internal-vlan-route": {
+            "class": "Route",
+            "network": "${internal_cidr}",
+            "gw": "${internal_gateway}"
+        },
+
         "myProvisioning": {
             "class": "Provision",
             "asm": "nominal",
             "avr": "nominal",
             "ltm": "nominal",
-            "fps": "nominal"
+            "fps": "nominal",
+            "afm": "nominal"
         },
 
         "dbVars": {
@@ -38,7 +100,7 @@
             "restjavad.useextramb": true,
             "ui.advisory.enabled": true,
             "ui.advisory.color": "green",
-            "ui.advisory.text": "Automation & Orchestration Toolchain Demo",
+            "ui.advisory.text": "Automation Toolchain Demo",
             "config.allow.rfc3927": "enable"
         },
 

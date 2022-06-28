@@ -33,25 +33,9 @@ bigip_ready_enabled:
       - tmsh create sys management-route mgmt_gw network ${mgmt_gateway}/32 type interface
       - tmsh create sys management-route mgmt_net network ${mgmt_cidr} gateway ${mgmt_gateway}
       - tmsh create sys management-route default gateway ${mgmt_gateway}
-  - name: external_network_settings
-    type: inline
-    commands:
-      - tmsh create net vlan external interfaces add { 1.1 } mtu 1460
-      - tmsh create net self external-self address ${external_self}/32 vlan external allow-service default
-      - tmsh create net route external-gw network ${external_gateway}/32 interface external
-      - tmsh create net route external-network network ${external_cidr} gw ${external_gateway}
-      - tmsh create net route default gw ${external_gateway}      
-  - name: internal_network_settings
-    type: inline
-    commands:
-      - tmsh create net vlan internal interfaces add { 1.2 } mtu 1460
-      - tmsh create net self internal-self address ${internal_self}/32 vlan internal allow-service default
-      - tmsh create net route internal-gw network ${internal_gateway}/32 interface internal
-      - tmsh create net route internal-network network ${internal_cidr} gw ${internal_gateway}
   - name: gcp_settings
     type: inline
     commands:
-      - tmsh modify sys global-settings remote-host add { metadata.google.internal { hostname metadata.google.internal addr 169.254.169.254 } }
       - tmsh modify sys dns name-servers add { 169.254.169.254 }
 extension_packages:
   install_operations:
@@ -59,10 +43,6 @@ extension_packages:
       extensionVersion: 1.30.0
     - extensionType: as3
       extensionVersion: 3.37.0
-    - extensionType: fast
-      extensionVersion: 1.18.0
-    - extensionType: ts
-      extensionVersion: 1.29.0
 extension_services:
   service_operations:
     - extensionType: do

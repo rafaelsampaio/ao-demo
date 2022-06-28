@@ -13,7 +13,7 @@ variable "internal-cidr" { default = "10.1.20.0/24" }
 
 #BIG-IP
 variable "bigip-name" { default = "bigip" }
-variable "bigip-passwd" {}
+variable "bigip-passwd" { sensitive = true }
 variable "bigip-machine" {}
 variable "bigip-image" {}
 variable "bigip-timezone" {}

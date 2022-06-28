@@ -1,11 +1,11 @@
 #Main
 #Terraform Version Pinning
 terraform {
-  required_version = "~> 1.1.0"
+  required_version = "~> 1.0"
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "~> 4.14"
+      version = "~> 4.27"
     }
   }
 }
@@ -19,7 +19,7 @@ provider "google" {
 
 #Other
 data "http" "myip" {
-  url = "https://ifconfig.io/ip"
+  url = "https://text.ipv4.wtfismyip.com/"
 
   request_headers = {
     Accept = "text/plain"
