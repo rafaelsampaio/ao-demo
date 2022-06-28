@@ -38,9 +38,14 @@
                     },                    
                     "securityLogProfiles": [
                         {
-                            "use": "${app_name}-app-security-logging"
+                            "bigip": "/Common/local-dos"
+                        },
+                        {
+                            "bigip": "/Common/local-bot-defense"
+                        },
+                        {
+                            "bigip": "/Common/Log illegal requests"
                         }
-                        
                     ]
                 },
 
@@ -124,7 +129,9 @@
                 },
 
                 "${app_name}-app-dos": {
-                    "class": "DOS_Profile",
+                    "class": "DOS_Profile",                    
+                    "remark": "${app_name}-app-dos",
+                    "label": "${app_name}-app-dos",
                     "application": {
                         "botDefense": {
                             "mode": "off"
@@ -144,19 +151,19 @@
                             "thresholdsMode": "automatic"
                         },
                         "singlePageApplicationEnabled": true
-                    }
-                },
-
-                "${app_name}-app-security-logging": {
-                    "class": "Security_Log_Profile",
-                    "label": "${app_name}-app-illegal_staged_response-local",
-                    "remark": "${app_name}-app-illegal_staged_response-local",
-                    "application": {
-                        "localStorage": true,
-                        "responseLogging": "illegal",
-                        "storageFilter": {
-                            "requestType": "illegal-including-staged-signatures"
-                        }
+                    },
+                    "network": {
+                        "dynamicSignatures": {
+                            "detectionMode": "earn-only",
+                            "mitigationMode": "none"
+                        },
+                        "vectors": [
+                            {
+                                "state": "detect-only",
+                                "thresholdMode": "fully-automatic",
+                                "type": "tcp-half-open"
+                            }
+                        ]
                     }
                 }
             }

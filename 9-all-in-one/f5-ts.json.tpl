@@ -21,7 +21,7 @@
         "class": "Telemetry_Consumer",
         "type": "ElasticSearch",
         "host": "${elastic_server}",
-        "index": "bigip-ts",
+        "index": "f5-bigip-ts",
         "port": 9200,
         "protocol": "http",
         "apiVersion": "8.1.0"
