@@ -42,7 +42,7 @@ gcp-zone     = ""
 gcp-svc-acct = ""
 ```
 
-If you want to use a different BIG-IP image/version, you can find the avaible images using the command below and set the ```bigip-image``` in ```terraform.tfvars```.
+You can find other avaible images using the command below and set the ```bigip-image``` in ```terraform.tfvars```.
 
 ```bash
 gcloud compute images list --project=f5-7626-networks-public | grep f5-bigip
