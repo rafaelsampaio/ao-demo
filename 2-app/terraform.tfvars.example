@@ -1,18 +1,11 @@
 #General
 #Google Environment
-prefix      = "demo"
+prefix      = ""
 gcp-project = ""
 gcp-region  = ""
 gcp-zone    = ""
 
-#BIG-IP
-bigip-admin   = ""
-bigip-address = ""
-bigip-passwd  = ""
-
 #App
-app-tenant          = "demo"
-app-name            = "demo"
 app-target-instance = ""
 app-target-network  = ""
 
@@ -23,7 +16,7 @@ server-network    = ""
 server-subnetwork = ""
 
 #Tags
-tag-environment = "demo"
-tag-owner       = "demo"
-tag-group       = "demo"
-tag-application = "demo"
+tag-environment = ""
+tag-owner       = ""
+tag-group       = ""
+tag-application = "YOUR_PREFIX-app"

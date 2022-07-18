@@ -1,6 +1,6 @@
 #BIG-IP
 variable "bigip-address" {}
-variable "bigip-admin" {}
+variable "bigip-admin" { value = "admin" }
 variable "bigip-passwd" {}
 
 #App

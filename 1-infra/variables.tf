@@ -25,4 +25,3 @@ variable "bigip-internal-self" { default = "10.1.20.245" }
 variable "tag-environment" {}
 variable "tag-owner" {}
 variable "tag-group" {}
-variable "tag-application" {}
