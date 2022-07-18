@@ -207,11 +207,16 @@ terraform apply
 
 ### Final
 
-Don't forget to destroy your resources by the end of the demo.
+Don't forget to destroy your resources by the end of the demo. First, destroy your application resources.
 
 ```bash
 cd 2-app
-terraform destroy --auto-approve
+terraform destroy -auto-approve
+```
+
+Then, destroy your infrastructure.
+
+```bash
 cd 1-infra
-terraform destroy --auto-approve
+terraform destroy -auto-approve
 ```
