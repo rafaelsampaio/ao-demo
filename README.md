@@ -89,6 +89,18 @@ Take note of all outputs, you will need some of them in next step. If you need t
 terraform output
 ```
 
+Open the file ```terraform.tfstate``` to see all resources managed by Terraform. Using CLI, use the command:
+
+```bash
+terraform state list
+```
+
+or, to show the attributes of a resource in the Terraform state:
+
+```bash
+terraform state show RESOURCE_NAME
+```
+
 ### Part 2 - Deploying the app
 
 In ```2-app```, rename the file [terraform.tfvars.example](2-app/terraform.tfvars.example) to ```terraform.tfvars``` and set your own variables. Please, use your username as ```prefix``` as the previus step.
