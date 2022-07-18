@@ -2,7 +2,7 @@
 
 **READ** the instructions before trying the commands.
 
-If you come across any errors, make sure you have read and followed the instructions, in the order they appeard.
+If you come across any errors, make sure you have read and followed the instructions, in the order they appeared.
 
 ## Technology
 
@@ -14,7 +14,7 @@ If you come across any errors, make sure you have read and followed the instruct
 
 It's highly recommended to use WSL in Windows or a Linux Virtual Machine in MacOS. All steps belows are for Linux, if you are using a different OS, make sure that **you** change all commands as needed.
 
-Install all required tools and set your own variable set
+Install all required tools and set your own variable set.
 
 Install these tools using your preferred way (brew, apt, manually, ...):
 
@@ -32,7 +32,7 @@ git clone https://github.com/rafaelsampaio/ao-demo.git
 cd 1-infra
 ```
 
-In ```1-infra```, rename the file [terraform.tfvars.example](1-infra/terraform.tfvars.example) to ```terraform.tfvars``` and set your own variables. Please, use your username as ```prefix```.
+In ```1-infra```, rename the file [terraform.tfvars.example](1-infra/terraform.tfvars.example) to ```terraform.tfvars``` and set your own variables. Please, use your username as ```prefix```, no capital letters.
 
 ```hcl
 prefix       = ""
@@ -42,7 +42,7 @@ gcp-zone     = ""
 gcp-svc-acct = ""
 ```
 
-You can find other avaible images using the command below and set the ```bigip-image``` in ```terraform.tfvars```.
+You can find other available images using the command below.
 
 ```bash
 gcloud compute images list --project=f5-7626-networks-public | grep f5-bigip
@@ -163,7 +163,7 @@ app-address  = ""
 app-node-ip  = ""
 ````
 
-And set the applications vars.
+And set the applications vars. For ```app-region```, use the same of Part 2.
 
 ```hcl
 app-tenant    = ""
