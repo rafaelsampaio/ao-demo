@@ -263,7 +263,7 @@ Go back to your application, create an account, make some purchases, post a comm
 
 ### Final
 
-Don't forget to destroy your resources by the end of the demo. Go back to the root folder of the project and use the ```delete_all.sh```.
+Don't forget to destroy your resources by the end of the demo. Go back to the root folder of the project and use the ```destroy_all.sh```.
 
 ```bash
 chmod +x destroy_all.sh
