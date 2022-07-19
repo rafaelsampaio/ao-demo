@@ -160,7 +160,7 @@ server-subnetwork = "" #Get this from Part 1 output
 
 ***Tip***: To avoid Terraform having to redeploy the forwarding rule, replace ***v1*** by ***beta*** between ```compute/``` and ```/projects``` in variable ```app-target-network```. Your var will be something like ```https://www.googleapis.com/compute/beta/projects/PROJECT_ID/global/networks/OBJECT_NAME```.
 
-Take a look at the ```.tf``` files, check all the resources that were declared. Using a terminal, change to the folder ```2-app```, and use the command below to init, plan and apply the declarations. Check for any error and fix them. 
+Take a look at the ```.tf``` files, check all the resources that were declared. Using a terminal, change to the folder ```2-app```, and use the command below to init, plan and apply the declarations. Check for any error and fix them.
 
 After the Terraform download all required providers, resouces and modules, test the plan. Verify that the plan is as expected and start implementation by confirming with ```yes```.
 
