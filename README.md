@@ -263,18 +263,9 @@ Go back to your application, create an account, make some purchases, post a comm
 
 ### Final
 
-Don't forget to destroy your resources by the end of the demo. First, destroy your application resources.
+Don't forget to destroy your resources by the end of the demo. Go back to the root folder of the project and use the ```delete_all.sh```.
 
 ```bash
-cd 2-app
-terraform destroy -auto-approve
-cd ..
-```
-
-Then, destroy your infrastructure.
-
-```bash
-cd 1-infra
-terraform destroy -auto-approve
-cd ..
+chmod +x destroy_all.sh
+./destroy_all.sh
 ```
