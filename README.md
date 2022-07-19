@@ -168,12 +168,14 @@ Use the BIG-IP management IP address output from the 1st step, as the password t
 From the 2nd step, set the application node IP address ```app-node-ip``` and the public IP address ```app-address```.
 
 ```hcl
+...
 #Part 3 - BIG-IP
 bigip-address = "" #Get this from Part 1 output
 
 #Part 3 - AS3
 app-address   = ""        #Get this from Part 2 output
 app-node-ip   = ""        #Get this from Part 2 output
+...
 ```
 
 #### Part 3a - Basic application service
@@ -196,6 +198,37 @@ Go to BIG-IP Configuration Utility and verify the Tenant (Partition), Applicatio
 In this part of the demo, you will create a set of Application Services with more functionality and features using AS3, including TLS, Analytics, Application and Network Security and Service Discovery.
 Take a look at the ```.tf``` and ```appServiceDiscoveryTLS.json.tpl``` files, check all the resources that were declared.
 In [as3.tf](3-as3/as3.tf), comment the Part 1 Basic App (line 3 and 15) and remove the comments for the Part 2 (lines 6, 18-21).
+
+```hcl
+data "template_file" "app-declaration" {
+  #Part 1: Basic app (appBasic.json.tpl)
+  #template = file("${path.module}/appBasic.json.tpl")
+
+  #Part 2: App with Service Discovery and TLS (appServiceDiscoveryTLS.json.tpl)
+  template = file("${path.module}/appServiceDiscoveryTLS.json.tpl")
+
+  vars = {
+    app_tenant    = var.app-tenant
+    app_name      = var.app-name
+    app_address   = var.app-address
+    app_node_port = var.app-node-port
+
+    #Part 1: Basic app (appBasic.json.tpl)
+    #app_node_ip = var.app-node-ip
+
+    #Part 2: App with Service Discovery and TLS (appServiceDiscoveryTLS.json.tpl)
+    app_tag         = "${var.prefix}-app"
+    app_region      = var.gcp-region
+    app_certificate = replace(tls_self_signed_cert.app-certificate.cert_pem, "/\n/", "\\n")
+    app_private_key = replace(tls_private_key.app-private-key.private_key_pem, "/\n/", "\\n")
+  }
+}
+
+resource "bigip_as3" "as3-app" {
+  as3_json = data.template_file.app-declaration.rendered
+}
+```
+
 Test the plan, take a time to see how is the final version of the AS3 declaration. Check for any errors and fix them. Apply the new AS3 declaration by confirming with ```yes```.
 
 ```bash
