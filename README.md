@@ -32,9 +32,10 @@ git clone https://github.com/rafaelsampaio/ao-demo.git
 cd 1-infra
 ```
 
-In ```1-infra```, rename the file [terraform.tfvars.example](1-infra/terraform.tfvars.example) to ```terraform.tfvars``` and set the variable for the blocks *Google Environment*, *Labels*, and *Part 1 - BIG-IP*. Please, use your username as ```prefix```, no capital letters. At this time, please ignore the other blocks.
+In ```1-infra```, rename the file [terraform.tfvars.example](1-infra/terraform.tfvars.example) to ```terraform.tfvars``` and set the variable for the blocks *Google Environment* and *Part 1*. Please, use your username as ```prefix```, no capital letters. At this time, please ignore the other blocks.
 
 ```hcl
+####### General
 #Google Environment
 prefix       = "CHANGE_THIS!!!"
 gcp-project  = ""
@@ -42,9 +43,11 @@ gcp-region   = ""
 gcp-zone     = ""
 gcp-svc-acct = "" #use your service account with the email format
 
+####### Part 1
 #Part 1 - BIG-IP
 bigip-passwd   = ""
 
+####### Part 2
 #Part 2 - App Forwarding Rules
 app-target-instance = "" #Get this from Part 1 output
 app-target-network  = "" #Get this from Part 1 output
@@ -53,6 +56,7 @@ app-target-network  = "" #Get this from Part 1 output
 server-network    = "" #Get this from Part 1 output
 server-subnetwork = "" #Get this from Part 1 output
 
+####### Part 3
 #Part 3 - BIG-IP
 bigip-address = "" #Get this from Part 1 output
 
@@ -92,12 +96,12 @@ terraform init
 ```
 
 Check for any error and fix them. After the Terraform download all required providers, resouces and modules, test the plan.
+***NOTE:*** Ignore any *Warning* related to undeclared variable.
 
 ```bash
 terraform plan
 ```
 
-***NOTE:*** Ignore any *Warning* related to undeclared variable.
 Verify that the plan is as expected and start implementation. Type ```yes``` whe asked.
 
 ```bash
@@ -113,7 +117,9 @@ gcloud compute connect-to-serial-port `terraform output -raw console-bigip-name`
 ```
 
 The output will give you the management IP address and other useful information.
+
 To access Config Utility, you must use the user ``admin``` and the password you defined.
+
 Take note of all outputs, you will need some of them in next step. If you need to print the outputs another time, try the following command:
 
 ```bash
@@ -135,7 +141,9 @@ terraform state show RESOURCE_NAME
 ### Part 2 - Deploying the app
 
 Copy the ```terraform.tfvars``` from ```1-infra``` to ```2-app``` and update the Part 2 block.
+
 Set the vars ```app-target-instance``` and ```app-target-network``` to the values of the output from previus step.
+
 Set the ```server-network``` and ```server-subnetwork``` to the values of the output from previus step.
 
 ```hcl
@@ -152,7 +160,9 @@ server-subnetwork = "" #Get this from Part 1 output
 
 ***Tip***: To avoid Terraform having to redeploy the forwarding rule, replace ***v1*** by ***beta*** between ```compute/``` and ```/projects``` in variable ```app-target-network```. Your var will be something like ```https://www.googleapis.com/compute/beta/projects/PROJECT_ID/global/networks/OBJECT_NAME```.
 
-Take a look at the ```.tf``` files, check all the resources that were declared. Using a terminal, change to the folder ```2-app```, and use the command below to init, plan and apply the declarations. Check for any error and fix them. After the Terraform download all required providers, resouces and modules, test the plan. Verify that the plan is as expected and start implementation by confirming with ```yes```.
+Take a look at the ```.tf``` files, check all the resources that were declared. Using a terminal, change to the folder ```2-app```, and use the command below to init, plan and apply the declarations. Check for any error and fix them. 
+
+After the Terraform download all required providers, resouces and modules, test the plan. Verify that the plan is as expected and start implementation by confirming with ```yes```.
 
 ```bash
 cd ../2-app
@@ -164,7 +174,9 @@ terraform apply
 ### Part 3 - Deploying Application Services
 
 Copy the ```terraform.tfvars``` from ```2-app``` to ```3-as3``` and update the Part 3 block.
+
 Use the BIG-IP management IP address output from the 1st step, as the password that you set.
+
 From the 2nd step, set the application node IP address ```app-node-ip``` and the public IP address ```app-address```.
 
 ```hcl
@@ -181,6 +193,7 @@ app-node-ip   = ""        #Get this from Part 2 output
 #### Part 3a - Basic application service
 
 In this part of the demo, you'll create a simple appication using AS3. Take a look at the ```.tf``` and ```appBasic.json.tpl``` files, check all the resources that were declared.
+
 Using a terminal, change to the folder ```3-as3```, and use the command below to init, plan and apply the declarations. Check for any error and fix them. After the Terraform download all required providers, resouces and modules, test the plan and check it. Take a time to see how is the final version of the AS3 declaration. Apply by confirming with ```yes```.
 
 ```bash
@@ -191,12 +204,15 @@ terraform apply
 ```
 
 The Terraform will output your application URL. Navigate to that site and test your application.
-Go to BIG-IP Configuration Utility and verify the Tenant (Partition), Application (Folder), Virtual Server, Pool and Pool Members.
+
+Go to Config Utility and verify the Tenant (Partition), Application (Folder), Virtual Server, Pool and Pool Members.
 
 ### Part 3b - TLS, Security and Analytics
 
 In this part of the demo, you will create a set of Application Services with more functionality and features using AS3, including TLS, Analytics, Application and Network Security and Service Discovery.
+
 Take a look at the ```.tf``` and ```appServiceDiscoveryTLS.json.tpl``` files, check all the resources that were declared.
+
 In [as3.tf](3-as3/as3.tf), comment the Part 1 Basic App (line 3 and 15) and remove the comments for the Part 2 (lines 6, 18-21).
 
 ```hcl
@@ -239,7 +255,9 @@ terraform apply
 Go to to BIG-IP Configuration Utility and verify the Tenant (Partition), Application (Folder), Virtual Server, Pool and Pool Members, TLS, Analytics Profiles, and Application and Network Security.
 
 Did you notice that there is only one Service in AS3 but two Virtual Servers were created in the same Application? Can you explain why?
+
 And how were the Application Security settings (WAF policies) applied?
+
 Did you notice how pool members were configured? What if the application team increases the number of servers?
 
 Go back to ```2-app``` folder, update the [app.tf](2-app/app.tf) and change the resource counter from 1 to 3.
@@ -269,3 +287,11 @@ Don't forget to destroy your resources by the end of the demo. Go back to the ro
 chmod +x destroy_all.sh
 ./destroy_all.sh
 ```
+
+### Extra
+
+Other useful Terraform commands:
+
+- ```terraform fmt```: Rewrites all Terraform configuration files to a canonical format. Both configuration files (.tf) and variables files (.tfvars) are updated.
+- ```terraform validate```: Validate the configuration files in a directory, referring only to the configuration and not accessing any remote services such as remote state, provider APIs, etc.
+- ```terraform graph```: Produces a representation of the dependency graph between different objects in the current configuration and state. Paste the output in [Graphviz Online](https://dreampuf.github.io/GraphvizOnline/) to see the dependencies.
