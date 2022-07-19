@@ -10,8 +10,8 @@ variable "app-target-instance" {}
 variable "app-target-network" {}
 
 #Server
-variable "server-machine" {}
-variable "server-image" {}
+variable "server-machine" { default = "e2-medium" }
+variable "server-image" { default = "projects/f5-gcs-4261-sales-sa-all/global/machineImages/rsampaio-server-containers" }
 variable "server-network" {}
 variable "server-subnetwork" {}
 

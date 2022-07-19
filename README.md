@@ -50,8 +50,6 @@ app-target-instance = "" #Get this from Part 1 output
 app-target-network  = "" #Get this from Part 1 output
 
 #Part 2 - Server Compute Engine
-server-machine    = ""
-server-image      = ""
 server-network    = "" #Get this from Part 1 output
 server-subnetwork = "" #Get this from Part 1 output
 
@@ -61,9 +59,6 @@ bigip-address = "" #Get this from Part 1 output
 #Part 3 - AS3
 app-address   = ""        #Get this from Part 2 output
 app-node-ip   = ""        #Get this from Part 2 output
-app-tenant    = "AO-DEMO" #AS3 Tenant
-app-name      = "AO-DEMO" #AS3 Application
-app-node-port = "8000"
 ```
 
 ***Tip***: You can find other BIG-IP images using the command:

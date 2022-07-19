@@ -16,8 +16,6 @@ app-target-instance = "" #Get this from Part 1 output
 app-target-network  = "" #Get this from Part 1 output
 
 #Part 2 - Server Compute Engine
-server-machine    = "e2-medium"
-server-image      = "projects/f5-gcs-4261-sales-sa-all/global/machineImages/rsampaio-server-containers"
 server-network    = "" #Get this from Part 1 output
 server-subnetwork = "" #Get this from Part 1 output
 
