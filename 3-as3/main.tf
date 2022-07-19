@@ -1,11 +1,11 @@
 #Main
 #Terraform Version Pinning
 terraform {
-  required_version = "~> 1.0"
+  required_version = "~> 1.2"
   required_providers {
     bigip = {
       source  = "F5Networks/bigip"
-      version = "~> 1.14"
+      version = "~> 1.15"
     }
   }
 }

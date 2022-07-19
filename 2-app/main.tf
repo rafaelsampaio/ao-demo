@@ -1,15 +1,15 @@
 #Main
 #Terraform Version Pinning
 terraform {
-  required_version = "~> 1.0"
+  required_version = "~> 1.2"
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "~> 4.27"
+      version = "~> 4.28"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
-      version = "~> 4.27"
+      version = "~> 4.28"
     }
   }
 }
@@ -32,7 +32,7 @@ locals {
     owner       = "${var.prefix}-${var.tag-owner}"
     environment = "${var.prefix}-${var.tag-environment}"
     group       = "${var.prefix}-${var.tag-group}"
-    application = "${var.prefix}-${var.tag-application}"
+    application = "${var.prefix}-app"
     provider    = "${var.prefix}-terraform"
   }
 }

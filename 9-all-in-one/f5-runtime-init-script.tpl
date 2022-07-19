@@ -71,15 +71,15 @@ bigip_ready_enabled:
 extension_packages:
   install_operations:
     - extensionType: do
-      extensionVersion: 1.29.0
+      extensionVersion: 1.31.0
     - extensionType: as3
-      extensionVersion: 3.36.0
+      extensionVersion: 3.38.0
     - extensionType: fast
-      extensionVersion: 1.17.0
+      extensionVersion: 1.19.0
     - extensionType: ts
-      extensionVersion: 1.28.0
+      extensionVersion: 1.30.0
     - extensionType: cf
-      extensionVersion: 1.10.0
+      extensionVersion: 1.11.0
 extension_services:
   service_operations:
     - extensionType: do
@@ -97,7 +97,7 @@ extension_services:
 EOF
 
 echo "*** Downloading runtime init ***"
-curl https://cdn.f5.com/product/cloudsolutions/f5-bigip-runtime-init/v1.4.1/dist/f5-bigip-runtime-init-1.4.1-1.gz.run -o f5-bigip-runtime-init-1.4.1-1.gz.run && bash f5-bigip-runtime-init-1.4.1-1.gz.run -- '--cloud gcp'
+curl https://cdn.f5.com/product/cloudsolutions/f5-bigip-runtime-init/v1.5.1/dist/f5-bigip-runtime-init-1.5.1-1.gz.run -o f5-bigip-runtime-init-1.5.1-1.gz.run && bash f5-bigip-runtime-init-1.5.1-1.gz.run -- '--cloud gcp'
 
 echo "*** Running runtime init with YAML file ***"
 /usr/local/bin/f5-bigip-runtime-init --config-file /config/cloud/runtime-init-conf.yaml

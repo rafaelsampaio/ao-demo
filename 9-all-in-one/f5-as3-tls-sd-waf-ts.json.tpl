@@ -5,7 +5,7 @@
     "persist": true,
     "declaration": {
         "class": "ADC",
-        "schemaVersion": "3.36.0",
+        "schemaVersion": "3.38.0",
         "$schema": "https://raw.githubusercontent.com/F5Networks/f5-appsvcs-extension/master/schema/latest/as3-schema.json",
         "${app_tenant}": {
             "class": "Tenant",

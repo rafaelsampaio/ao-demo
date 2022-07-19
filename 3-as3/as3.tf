@@ -15,8 +15,8 @@ data "template_file" "app-declaration" {
     app_node_ip = var.app-node-ip
 
     #Part 2: App with Service Discovery and TLS (appServiceDiscoveryTLS.json.tpl)
-    #app_tag         = var.app-tag
-    #app_region      = var.app-region
+    #app_tag         = var.tag-application
+    #app_region      = var.gcp-region
     #app_certificate = replace(tls_self_signed_cert.app-certificate.cert_pem,"/\n/","\\n")
     #app_private_key = replace(tls_private_key.app-private-key.private_key_pem,"/\n/","\\n")
   }
