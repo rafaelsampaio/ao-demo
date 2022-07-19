@@ -1,4 +1,7 @@
 #! /bin/bash
+cd 3-as3
+terraform destroy -auto-approve
+cd ..
 cd 2-app
 terraform destroy -auto-approve
 cd ..

@@ -1,12 +1,12 @@
 # Outputs
 output "console-bigip-name" {
   description = "use this output to access the console"
-  value = google_compute_instance.bigip.name
+  value       = google_compute_instance.bigip.name
 }
 
 output "console-bigip-zone" {
   description = "use this output to access the console"
-  value = google_compute_instance.bigip.zone
+  value       = google_compute_instance.bigip.zone
 }
 
 output "bigip-address" {

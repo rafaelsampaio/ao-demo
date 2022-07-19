@@ -16,7 +16,6 @@ variable "server-network" {}
 variable "server-subnetwork" {}
 
 #Tags
-variable "tag-environment" {}
-variable "tag-owner" {}
-variable "tag-group" {}
-variable "tag-application" {}
+variable "tag-environment" { default = "ao-demo" }
+variable "tag-owner" { default = "ao-demo" }
+variable "tag-group" { default = "ao-demo" }

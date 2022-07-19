@@ -36,24 +36,14 @@ In ```1-infra```, rename the file [terraform.tfvars.example](1-infra/terraform.t
 
 ```hcl
 #Google Environment
-prefix       = "AO-DEMO"
+prefix       = "CHANGE_THIS!!!"
 gcp-project  = ""
 gcp-region   = ""
 gcp-zone     = ""
 gcp-svc-acct = ""
 
-#Labels
-tag-environment = "AO-DEMO"
-tag-owner       = "AO-DEMO"
-tag-group       = "AO-DEMO"
-tag-application = "AO-DEMO"
-
 #Part 1 - BIG-IP
-bigip-admin    = "admin"
 bigip-passwd   = ""
-bigip-image    = "projects/f5-7626-networks-public/global/images/f5-bigip-16-1-3-0-0-12-payg-best-plus-25mbps-220607234435"
-bigip-machine  = "n2-standard-8"
-bigip-timezone = "UTC"
 
 #Part 2 - App Forwarding Rules
 app-target-instance = "" #Get this from Part 1 output
@@ -94,7 +84,7 @@ Check for any error and fix them. After the Terraform download all required prov
 terraform plan
 ```
 
-***NOTE:*** Ignore any *Warning: Value for undeclared variable*.
+***NOTE:*** Ignore any *Warning* related to undeclared variable.
 Verify that the plan is as expected and start implementation. Type ```yes``` whe asked.
 
 ```bash
@@ -109,14 +99,15 @@ It'll take about 5-10 minutes to finish Declarative Onboarding setup. Look for t
 gcloud compute connect-to-serial-port `terraform output -raw console-bigip-name` --zone=`terraform output -raw console-bigip-zone`
 ```
 
-The output will give you the management IP address. To access Config Utility, you must use the user ``admin``` and the password you defined.
+The output will give you the management IP address and other useful information.
+To access Config Utility, you must use the user ``admin``` and the password you defined.
 Take note of all outputs, you will need some of them in next step. If you need to print the outputs another time, try the following command:
 
 ```bash
 terraform output
 ```
 
-Open the file ```terraform.tfstate``` to see all resources in the state file. To get the list of resource, use the command:
+Open the file ```terraform.tfstate``` to see all resources in the state file. To list the resources, use the command:
 
 ```bash
 terraform state list
@@ -146,7 +137,7 @@ server-subnetwork = "" #Get this from Part 1 output
 ...
 ```
 
-***Tip***: To avoid Terraform having to redeploy the forwarding rule, instead of ***v1***, type ***beta*** between ```compute/``` and ```/projects``` in variable ```app-target-network```. Your var will be something like ```https://www.googleapis.com/compute/beta/projects/PROJECT_ID/global/networks/OBJECT_NAME```.
+***Tip***: To avoid Terraform having to redeploy the forwarding rule, replace ***v1*** for ***beta*** between ```compute/``` and ```/projects``` in variable ```app-target-network```. Your var will be something like ```https://www.googleapis.com/compute/beta/projects/PROJECT_ID/global/networks/OBJECT_NAME```.
 
 Take a look at the ```.tf``` files, check all the resources that were declared. Using a terminal, change to the folder ```2-app```, and use the command below to init, plan and apply the declarations. Check for any error and fix them. After the Terraform download all required providers, resouces and modules, test the plan. Verify that the plan is as expected and start implementation by confirming with ```yes```.
 

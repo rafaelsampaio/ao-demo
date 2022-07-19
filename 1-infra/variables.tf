@@ -14,14 +14,14 @@ variable "internal-cidr" { default = "10.1.20.0/24" }
 #BIG-IP
 variable "bigip-name" { default = "bigip" }
 variable "bigip-passwd" { sensitive = true }
-variable "bigip-machine" {}
-variable "bigip-image" {}
-variable "bigip-timezone" {}
+variable "bigip-machine" { default = "n2-standard-8" }
+variable "bigip-image" { default = "projects/f5-7626-networks-public/global/images/f5-bigip-16-1-3-0-0-12-payg-best-plus-25mbps-220607234435" }
+variable "bigip-timezone" { default = "UTC" }
 variable "bigip-mgmt-self" { default = "10.1.1.245" }
 variable "bigip-external-self" { default = "10.1.10.245" }
 variable "bigip-internal-self" { default = "10.1.20.245" }
 
 #Tags
-variable "tag-environment" {}
-variable "tag-owner" {}
-variable "tag-group" {}
+variable "tag-environment" { default = "ao-demo" }
+variable "tag-owner" { default = "ao-demo" }
+variable "tag-group" { default = "ao-demo" }
