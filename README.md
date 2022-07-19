@@ -40,7 +40,7 @@ prefix       = "CHANGE_THIS!!!"
 gcp-project  = ""
 gcp-region   = ""
 gcp-zone     = ""
-gcp-svc-acct = ""
+gcp-svc-acct = "" #use your service account with the email format
 
 #Part 1 - BIG-IP
 bigip-passwd   = ""
@@ -59,6 +59,24 @@ bigip-address = "" #Get this from Part 1 output
 #Part 3 - AS3
 app-address   = ""        #Get this from Part 2 output
 app-node-ip   = ""        #Get this from Part 2 output
+```
+
+Choose your project from the list:
+
+```bash
+gcloud projects list
+```
+
+To find the available region, use the command:
+
+```bash
+gcloud compute regions list
+```
+
+Choose your zone using the command, replacing *YOUR_REGION* with the chosen region:
+
+```bash
+gcloud compute zones list | grep YOUR_REGION
 ```
 
 ***Tip***: You can find other BIG-IP images using the command:
