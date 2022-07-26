@@ -1,7 +1,7 @@
 # BIG-IP
 # Setup Onboarding scripts
 data "template_file" "startup_script" {
-  template = file("${path.module}/startup-script.tpl")
+  template = file("${path.module}/startup-script.sh.tftpl")
   vars = {
     do-file = data.template_file.do_declaration.rendered
 
@@ -12,7 +12,7 @@ data "template_file" "startup_script" {
 }
 
 data "template_file" "do_declaration" {
-  template = file("${path.module}/do.json.tpl")
+  template = file("${path.module}/do.json.tftpl")
   vars = {
     hostname = "${var.prefix}-${var.bigip-name}"
     passwd   = var.bigip-passwd

@@ -1,9 +1,9 @@
 data "template_file" "app-declaration" {
   #Part 1: Basic app (appBasic.json.tpl)
-  #template = file("${path.module}/appBasic.json.tpl")
+  template = file("${path.module}/appBasic.json.tftpl")
 
   #Part 2: App with Service Discovery and TLS (appServiceDiscoveryTLS.json.tpl)
-  template = file("${path.module}/appServiceDiscoveryTLS.json.tpl")
+  #template = file("${path.module}/appServiceDiscoveryTLS.json.tftpl")
 
   vars = {
     app_tenant    = var.app-tenant
@@ -12,13 +12,13 @@ data "template_file" "app-declaration" {
     app_node_port = var.app-node-port
 
     #Part 1: Basic app (appBasic.json.tpl)
-    #app_node_ip = var.app-node-ip
+    app_node_ip = var.app-node-ip
 
     #Part 2: App with Service Discovery and TLS (appServiceDiscoveryTLS.json.tpl)
-    app_tag         = "${var.prefix}-app"
-    app_region      = var.gcp-region
-    app_certificate = replace(tls_self_signed_cert.app-certificate.cert_pem, "/\n/", "\\n")
-    app_private_key = replace(tls_private_key.app-private-key.private_key_pem, "/\n/", "\\n")
+    #app_tag         = "${var.prefix}-app"
+    #app_region      = var.gcp-region
+    #app_certificate = replace(tls_self_signed_cert.app-certificate.cert_pem, "/\n/", "\\n")
+    #app_private_key = replace(tls_private_key.app-private-key.private_key_pem, "/\n/", "\\n")
   }
 }
 

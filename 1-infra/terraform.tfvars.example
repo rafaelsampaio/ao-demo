@@ -1,10 +1,10 @@
 ####### General
 #Google Environment
 prefix       = "CHANGE_THIS!!!"
-gcp-project  = ""
+gcp-project  = ""        #use the project id
 gcp-region   = ""
 gcp-zone     = ""
-gcp-svc-acct = "" #use your service account with the email format
+gcp-svc-acct = ""        #use your service account with the email format
 
 ####### Part 1
 #Part 1 - BIG-IP
@@ -16,13 +16,13 @@ app-target-instance = "" #Get this from Part 1 output
 app-target-network  = "" #Get this from Part 1 output
 
 #Part 2 - Server Compute Engine
-server-network    = "" #Get this from Part 1 output
-server-subnetwork = "" #Get this from Part 1 output
+server-network    = ""   #Get this from Part 1 output
+server-subnetwork = ""   #Get this from Part 1 output
 
 ####### Part 3
 #Part 3 - BIG-IP
-bigip-address = "" #Get this from Part 1 output
+bigip-address = ""       #Get this from Part 1 output
 
 #Part 3 - AS3
-app-address   = ""        #Get this from Part 2 output
-app-node-ip   = ""        #Get this from Part 2 output
+app-address   = ""       #Get this from Part 2 output
+app-node-ip   = ""       #Get this from Part 2 output
