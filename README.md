@@ -248,11 +248,11 @@ In [as3.tf](3-as3/as3.tf), comment the Part 1 Basic App (line 3 and 15) and remo
 
 ```hcl
 data "template_file" "app-declaration" {
-  #Part 1: Basic app (appBasic.json.tpl)
-  #template = file("${path.module}/appBasic.json.tpl")
+  #Part 1: Basic app (appBasic.json.tftpl)
+  #template = file("${path.module}/appBasic.json.tftpl")
 
-  #Part 2: App with Service Discovery and TLS (appServiceDiscoveryTLS.json.tpl)
-  template = file("${path.module}/appServiceDiscoveryTLS.json.tpl")
+  #Part 2: App with Service Discovery and TLS (appServiceDiscoveryTLS.json.tftpl)
+  template = file("${path.module}/appServiceDiscoveryTLS.json.tftpl")
 
   vars = {
     app_tenant    = var.app-tenant
@@ -260,10 +260,10 @@ data "template_file" "app-declaration" {
     app_address   = var.app-address
     app_node_port = var.app-node-port
 
-    #Part 1: Basic app (appBasic.json.tpl)
+    #Part 1: Basic app (appBasic.json.tftpl)
     #app_node_ip = var.app-node-ip
 
-    #Part 2: App with Service Discovery and TLS (appServiceDiscoveryTLS.json.tpl)
+    #Part 2: App with Service Discovery and TLS (appServiceDiscoveryTLS.json.tfpl)
     app_tag         = "${var.prefix}-app"
     app_region      = var.gcp-region
     app_certificate = replace(tls_self_signed_cert.app-certificate.cert_pem, "/\n/", "\\n")
@@ -276,7 +276,7 @@ resource "bigip_as3" "as3-app" {
 }
 ```
 
-Take a look at the and [`appServiceDiscoveryTLS.json.tpl`](3-as3/appServiceDiscoveryTLS.json.tftpl) file, check all the resources that were declared.
+Take a look at the and [`appServiceDiscoveryTLS.json.tftpl`](3-as3/appServiceDiscoveryTLS.json.tftpl) file, check all the resources that were declared.
 
 The AS3 declaration include a single Tenant, a single Application with a single HTTPS Service with Pool without Pool Members, TLS configuration, Analytics, Network Security, Application Security and Logging. Can you identity all those elements in the AS3 declaration?
 
