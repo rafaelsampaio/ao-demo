@@ -31,7 +31,7 @@ data "template_file" "do_declaration" {
 
 # Create F5 BIG-IP VMs
 resource "google_compute_instance" "bigip" {
-  name           = "${var.prefix}-${var.bigip-name}"
+  name           = "${var.prefix}-aodemo-${var.bigip-name}"
   machine_type   = var.bigip-machine
   zone           = var.gcp-zone
   can_ip_forward = true
