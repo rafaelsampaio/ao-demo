@@ -3,12 +3,10 @@ output "console-bigip-name" {
   description = "use this output to access the console"
   value       = google_compute_instance.bigip.name
 }
-
 output "console-bigip-zone" {
   description = "use this output to access the console"
   value       = google_compute_instance.bigip.zone
 }
-
 output "bigip-address" {
   description = "use this output to configure the your bigip-address in part 3"
   value       = google_compute_instance.bigip.network_interface.0.access_config.0.nat_ip

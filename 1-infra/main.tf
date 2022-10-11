@@ -5,7 +5,7 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "~> 4.31"
+      version = "~> 4.40"
     }
   }
 }
@@ -27,6 +27,7 @@ data "http" "myip" {
 }
 
 locals {
+
   labels = {
     owner       = "${var.prefix}-${var.tag-owner}"
     environment = "${var.prefix}-${var.tag-environment}"

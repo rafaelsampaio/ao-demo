@@ -1,12 +1,12 @@
 {
+    "$schema": "https://raw.githubusercontent.com/F5Networks/f5-appsvcs-extension/master/schema/latest/as3-schema.json",
     "class": "AS3",
     "action": "deploy",
     "logLevel": "debug",
     "persist": true,
     "declaration": {
         "class": "ADC",
-        "schemaVersion": "3.38.0",
-        "$schema": "https://raw.githubusercontent.com/F5Networks/f5-appsvcs-extension/master/schema/latest/as3-schema.json",
+        "schemaVersion": "3.40.0",
         "${app_tenant}": {
             "class": "Tenant",
             "${app_name}": {

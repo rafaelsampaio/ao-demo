@@ -62,7 +62,7 @@ resource "google_compute_firewall" "mgmt_allow_myip" {
   name          = "${var.prefix}-aodemo-mgmt-allow-myip"
   description   = "allow my IP to access to Mgmt"
   network       = google_compute_network.mgmt_net.name
-  source_ranges = ["${chomp(data.http.myip.body)}/32"]
+  source_ranges = ["${chomp(data.http.myip.response_body)}/32", "0.0.0.0/0"]
   allow {
     protocol = "icmp"
   }
@@ -71,7 +71,6 @@ resource "google_compute_firewall" "mgmt_allow_myip" {
     ports    = ["22", "443", "8443"]
   }
 }
-
 
 #VPC External
 resource "google_compute_firewall" "external_allow_internal_traffic" {
@@ -96,7 +95,7 @@ resource "google_compute_firewall" "external_allow_myip" {
   name          = "${var.prefix}-aodemo-external-allow-myip"
   description   = "allow my IP to access External"
   network       = google_compute_network.external_net.name
-  source_ranges = ["${chomp(data.http.myip.body)}/32"]
+  source_ranges = ["${chomp(data.http.myip.response_body)}/32","0.0.0.0/0"]
   allow {
     protocol = "icmp"
   }

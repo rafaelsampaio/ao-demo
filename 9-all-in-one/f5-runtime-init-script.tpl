@@ -71,15 +71,15 @@ bigip_ready_enabled:
 extension_packages:
   install_operations:
     - extensionType: do
-      extensionVersion: 1.31.0
+      extensionVersion: 1.33.0
     - extensionType: as3
-      extensionVersion: 3.38.0
+      extensionVersion: 3.40.0
     - extensionType: fast
-      extensionVersion: 1.19.0
+      extensionVersion: 1.21.0
     - extensionType: ts
-      extensionVersion: 1.30.0
+      extensionVersion: 1.32.0
     - extensionType: cf
-      extensionVersion: 1.11.0
+      extensionVersion: 1.13.0
 extension_services:
   service_operations:
     - extensionType: do

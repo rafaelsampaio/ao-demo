@@ -1,6 +1,6 @@
 {
     "$schema": "https://github.com/F5Networks/f5-declarative-onboarding/raw/master/src/schema/latest/base.schema.json",
-    "schemaVersion": "1.30.0",
+    "schemaVersion": "1.33.0",
     "class": "Device",
     "async": true,
     "Common": {
@@ -87,11 +87,12 @@
 
         "myProvisioning": {
             "class": "Provision",
+            "afm": "nominal",
+            "gtm": "nominal",
+            "ltm": "nominal",
             "asm": "nominal",
             "avr": "nominal",
-            "ltm": "nominal",
-            "fps": "nominal",
-            "afm": "nominal"
+            "fps": "nominal"
         },
 
         "dbVars": {
@@ -100,7 +101,7 @@
             "restjavad.useextramb": true,
             "ui.advisory.enabled": true,
             "ui.advisory.color": "green",
-            "ui.advisory.text": "Automation Toolchain Demo",
+            "ui.advisory.text": "Application Services A&O Demo",
             "config.allow.rfc3927": "enable"
         },
 
