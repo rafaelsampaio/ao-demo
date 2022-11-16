@@ -1,5 +1,5 @@
-# Networking
-# VPC Management
+#Networking
+#VPC Management
 resource "google_compute_network" "mgmt_net" {
   name                    = "${var.prefix}-mgmt-net"
   auto_create_subnetworks = "false"
@@ -12,7 +12,7 @@ resource "google_compute_subnetwork" "mgmt_subnet" {
   network       = google_compute_network.mgmt_net.name
 }
 
-# VPC External
+#VPC External
 resource "google_compute_network" "external_net" {
   name                    = "${var.prefix}-external-net"
   auto_create_subnetworks = "false"
@@ -25,7 +25,7 @@ resource "google_compute_subnetwork" "external_subnet" {
   network       = google_compute_network.external_net.name
 }
 
-# VPC Internal
+#VPC Internal
 resource "google_compute_network" "internal_net" {
   name                    = "${var.prefix}-internal-net"
   auto_create_subnetworks = "false"
@@ -38,7 +38,7 @@ resource "google_compute_subnetwork" "internal_subnet" {
   network       = google_compute_network.internal_net.name
 }
 
-# Firewall Rules
+#Firewall Rules
 #VPC Management
 resource "google_compute_firewall" "mgmt_allow_traffic" {
   name          = "${var.prefix}-mgmt-allow-traffic"
@@ -62,7 +62,7 @@ resource "google_compute_firewall" "mgmt_allow_myip" {
   name          = "${var.prefix}-mgmt-allow-myip"
   description   = "allow my IP to access to Mgmt"
   network       = google_compute_network.mgmt_net.name
-  source_ranges = ["${chomp(data.http.myip.body)}/32"]
+  source_ranges = ["${chomp(data.http.myip.response_body)}/32"]
   allow {
     protocol = "icmp"
   }
@@ -96,7 +96,7 @@ resource "google_compute_firewall" "external_allow_myip" {
   name          = "${var.prefix}-external-allow-myip"
   description   = "allow my IP to access External"
   network       = google_compute_network.external_net.name
-  source_ranges = ["${chomp(data.http.myip.body)}/32"]
+  source_ranges = ["${chomp(data.http.myip.response_body)}/32"]
   allow {
     protocol = "icmp"
   }

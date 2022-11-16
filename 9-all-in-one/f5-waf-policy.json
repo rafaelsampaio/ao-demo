@@ -1,15 +1,16 @@
 {
    "$schema": "https://clouddocs.f5.com/products/waf-declarative-policy/_downloads/1ea282907775c0a30240d3d5da4c2708/schema_v16_1.json",
    "policy": {
-      "name": "ao-demo-waf-policy",
+      "name": "juiceshop",
       "description": "Automation & Orchestration Toolchain WAF Policy",
-      "softwareVersion": "16.1.2",
+      "softwareVersion": "16.1.3",
       "template": {
          "name": "POLICY_TEMPLATE_COMPREHENSIVE"
       },
+      "applicationLanguage": "utf-8",
       "protocolIndependent": false,
       "enablePassiveMode": false,
-      "caseInsensitive": false,
+      "caseInsensitive": true,
       "behavioral-enforcement": {
          "enableBehavioralEnforcement": true,
          "enableBlockingHighAccuracySignatures": true,
@@ -66,5 +67,6 @@
             "ajaxActionType": "alert-popup"
          }
       ]
-   }
+   },
+   "modifications": []
 }

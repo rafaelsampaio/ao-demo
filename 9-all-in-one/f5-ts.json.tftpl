@@ -1,0 +1,30 @@
+{
+    "$schema": "https://raw.githubusercontent.com/F5Networks/f5-telemetry-streaming/master/src/schema/latest/base_schema.json",
+    "class": "Telemetry",
+    "schemaVersion": "1.32.0",
+    "Local_BIG-IP": {
+        "class": "Telemetry_System",
+        "systemPoller": {
+            "interval": 60
+        }
+    },
+    "Local_Controls": {
+        "class": "Controls",
+        "logLevel": "info",
+        "debug": false
+    },
+    "Local_Listener": {
+        "class": "Telemetry_Listener",
+        "port": 6514
+    },
+    "ElasticSearch": {
+        "class": "Telemetry_Consumer",
+        "type": "ElasticSearch",
+        "host": "${ts_es_host}",
+        "index": "f5-ts",
+        "port": 80,
+        "allowSelfSignedCert": true,
+        "apiVersion": "7.0",
+        "protocol": "http"
+    }
+}

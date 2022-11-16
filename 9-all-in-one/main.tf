@@ -1,15 +1,15 @@
 #Main
 #Terraform Version Pinning
 terraform {
-  required_version = "~> 1.2.0"
+  required_version = "~> 1.3.0"
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "~> 4.40"
+      version = "~> 4.43"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
-      version = "~> 4.40"
+      version = "~> 4.43"
     }
   }
 }
@@ -37,20 +37,6 @@ data "http" "myip" {
 }
 
 locals {
-  app_labels_dvwa = {
-    owner       = "${var.prefix}-${var.tag_owner}"
-    environment = "${var.prefix}-${var.tag_environment}"
-    group       = "${var.prefix}-${var.tag_group}"
-    application = "${var.prefix}-dvwa"
-    provider    = "${var.prefix}-terraform"
-  }
-  app_labels_hackazon = {
-    owner       = "${var.prefix}-${var.tag_owner}"
-    environment = "${var.prefix}-${var.tag_environment}"
-    group       = "${var.prefix}-${var.tag_group}"
-    application = "${var.prefix}-hackazon"
-    provider    = "${var.prefix}-terraform"
-  }
   app_labels_juiceshop = {
     owner       = "${var.prefix}-${var.tag_owner}"
     environment = "${var.prefix}-${var.tag_environment}"

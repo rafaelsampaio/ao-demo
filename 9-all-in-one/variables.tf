@@ -25,6 +25,11 @@ variable "bigip_mgmt_self" { default = "10.1.1.245" }
 variable "bigip_external_self" { default = "10.1.10.245" }
 variable "bigip_internal_self" { default = "10.1.20.245" }
 
+#ElasticSearch
+variable "ts-host" {}
+variable "ts-username" {}
+variable "ts-password" {}
+
 #Tags
 variable "tag_environment" {}
 variable "tag_owner" {}

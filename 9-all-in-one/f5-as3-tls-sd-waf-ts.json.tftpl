@@ -14,29 +14,42 @@
 
                 "${app_name}-https": {
                     "class": "Service_HTTPS",
-                    "remark": "${app_name}-HTTPS-service",
-                    "serverTLS": "${app_name}-tls",
-                    "pool": "${app_name}-pool-sd",
-                    "allowVlans": [
-                        "external"
-                    ],
+                    "remark": "Application ${app_name} HTTPS service",
                     "virtualAddresses": [
                         "${app_address}"
                     ],
+                    "allowVlans": [
+                        "external"
+                    ],
+                    "serverTLS": "${app_name}-tls",
+                    "pool": "${app_name}-pool-sd",
+
                     "profileAnalytics": {
                         "use": "${app_name}-analytics-http"
                     },
                     "profileAnalyticsTcp": {
                         "use": "${app_name}-analytics-tcp"
                     },
+
                     "snat": "auto",
+
+                    "profileDOS": {
+                        "use": "${app_name}-network-dos"
+                    },
                     "policyWAF": {
                         "use": "${app_name}-waf-policy"
                     },
-                    "profileDOS": {
-                        "use": "${app_name}-app-dos"
-                    },                    
+
+                    "profileTrafficLog": {
+                        "bigip": "/Common/Shared/telemetry_traffic_log_profile"
+                    },
                     "securityLogProfiles": [
+                        {
+                            "bigip": "/Common/Shared/telemetry_asm_security_log_profile"
+                        },
+                        {
+                            "bigip": "/Common/Shared/telemetry_afm_security_log_profile"
+                        },
                         {
                             "bigip": "/Common/local-dos"
                         },
@@ -71,6 +84,7 @@
 
                 "${app_name}-pool-sd": {
                     "class": "Pool",
+                    "remark": "Pool with Service Discovery in GCE",
                     "monitors": [
                         "http"
                     ],
@@ -89,6 +103,7 @@
 
                 "${app_name}-analytics-http": {
                     "class": "Analytics_Profile",
+                    "remark": "Enable application statistics collections to AVR",
                     "collectClientSideStatistics": true,
                     "collectedStatsInternalLogging": true,
                     "collectGeo": true,
@@ -107,6 +122,7 @@
 
                 "${app_name}-analytics-tcp": {
                     "class": "Analytics_TCP_Profile",
+                    "remark": "Enable TCP statistics collections to AVR",
                     "collectCity": true,
                     "collectContinent": true,
                     "collectCountry": true,
@@ -120,21 +136,13 @@
                     "collectRemoteHostSubnet": true
                 },
 
-                "${app_name}-waf-policy": {
-                    "class": "WAF_Policy",
-                    "remark": "${app_name}-WAF-policy",
-                    "label": "${app_name}-WAF-policy",
-                    "url": "https://raw.githubusercontent.com/rafaelsampaio/ao-demo/main/9-all-in-one/f5-waf-policy.json",
-                    "ignoreChanges": true
-                },
-
-                "${app_name}-app-dos": {
+                "${app_name}-network-dos": {
                     "class": "DOS_Profile",                    
-                    "remark": "${app_name}-app-dos",
+                    "remark": "Network DoS protection",
                     "label": "${app_name}-app-dos",
                     "application": {
                         "botDefense": {
-                            "mode": "off"
+                            "mode": "during-attacks"
                         },
                         "botSignatures": {
                             "checkingEnabled": true
@@ -154,17 +162,20 @@
                     },
                     "network": {
                         "dynamicSignatures": {
-                            "detectionMode": "earn-only",
+                            "detectionMode": "learn-only",
                             "mitigationMode": "none"
                         },
-                        "vectors": [
-                            {
-                                "state": "detect-only",
-                                "thresholdMode": "fully-automatic",
-                                "type": "tcp-half-open"
-                            }
-                        ]
+                        "vectors": ${jsonencode(network_dos_vectors)
+                        }
                     }
+                },
+
+                "${app_name}-waf-policy": {
+                    "class": "WAF_Policy",
+                    "remark": "WAF policy retrieved from GitHub repo",
+                    "label": "${app_name}-WAF-policy",
+                    "url": "https://raw.githubusercontent.com/rafaelsampaio/ao-demo/main/9-all-in-one/f5-waf-policy.json",
+                    "ignoreChanges": true
                 }
             }
         }

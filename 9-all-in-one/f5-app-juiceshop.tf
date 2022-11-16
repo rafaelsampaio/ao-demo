@@ -33,27 +33,11 @@ resource "tls_self_signed_cert" "juiceshop_cert" {
     organizational_unit = "Automation & Orchestration Toolchain Demo"
   }
 
-  validity_period_hours = 24
+  validity_period_hours = 168
 
   allowed_uses = [
     "key_encipherment",
     "digital_signature",
     "server_auth",
   ]
-}
-
-data "template_file" "f5_as3_juiceshop" {
-  template = file("${path.module}/f5-as3-tls-sd-waf-ts.json.tpl")
-
-  vars = {
-    app_tag         = "${var.prefix}-juiceshop"
-    app_region      = var.gcp_region
-    app_certificate = replace(tls_self_signed_cert.juiceshop_cert.cert_pem, "/\n/", "\\n")
-    app_private_key = replace(tls_private_key.juiceshop_key.private_key_pem, "/\n/", "\\n")
-
-    app_tenant    = "juiceshop"
-    app_name      = "juiceshop"
-    app_address   = google_compute_address.juiceshop.address
-    app_node_port = 8000
-  }
 }

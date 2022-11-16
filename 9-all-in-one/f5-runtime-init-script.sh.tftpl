@@ -18,26 +18,28 @@ cat << 'EOF' > /config/cloud/do.json
 ${do-file}
 EOF
 
+echo "*** Creating TS file ***"
+cat << 'EOF' > /config/cloud/ts-config.json
+${ts-config}
+EOF
+
+echo "*** Creating AS3 Shared file ***"
+cat << 'EOF' > /config/cloud/as3-shared.json
+${as3-shared }
+EOF
+
 echo "*** Creating AS3 Juice Shop file ***"
 cat << 'EOF' > /config/cloud/as3-juiceshop.json
-${as3-juiceshop-file}
-EOF
-
-echo "*** Creating AS3 DVWA file ***"
-cat << 'EOF' > /config/cloud/as3-dvwa.json
-${as3-dvwa-file}
-EOF
-
-echo "*** Creating AS3 Hackazon file ***"
-cat << 'EOF' > /config/cloud/as3-hackazon.json
-${as3-hackazon-file}
+${as3-juiceshop}
 EOF
 
 echo "*** Creating runtime init with YAML file  ***"
 cat << 'EOF' > /config/cloud/runtime-init-conf.yaml
 ---
+controls:
+  logLevel: info
 bigip_ready_enabled:
-  - name: management-network-settings
+  - name: management_network_settings
     type: inline
     commands:
       - tmsh modify sys db provision.1nicautoconfig value disable
@@ -48,25 +50,9 @@ bigip_ready_enabled:
       - tmsh create sys management-route mgmt_gw network ${mgmt-gateway}/32 type interface
       - tmsh create sys management-route mgmt_net network ${mgmt-cidr} gateway ${mgmt-gateway}
       - tmsh create sys management-route default gateway ${mgmt-gateway}
-  - name: external-network-settings
+  - name: gcp_settings
     type: inline
     commands:
-      - tmsh create net vlan external interfaces add { 1.1 } mtu 1460
-      - tmsh create net self external-self address ${external-self}/32 vlan external allow-service default
-      - tmsh create net route external-gw network ${external-gateway}/32 interface external
-      - tmsh create net route external-network network ${external-cidr} gw ${external-gateway}
-      - tmsh create net route default gw ${external-gateway}      
-  - name: internal-network-settings
-    type: inline
-    commands:
-      - tmsh create net vlan internal interfaces add { 1.2 } mtu 1460
-      - tmsh create net self internal-self address ${internal-self}/32 vlan internal allow-service default
-      - tmsh create net route internal-gw network ${internal-gateway}/32 interface internal
-      - tmsh create net route internal-network network ${internal-cidr} gw ${internal-gateway}
-  - name: gcp-settings
-    type: inline
-    commands:
-      - tmsh modify sys global-settings remote-host add { metadata.google.internal { hostname metadata.google.internal addr 169.254.169.254 } }
       - tmsh modify sys dns name-servers add { 169.254.169.254 }
 extension_packages:
   install_operations:
@@ -85,15 +71,15 @@ extension_services:
     - extensionType: do
       type: url
       value: file:///config/cloud/do.json
+    - extensionType: ts
+      type: url
+      value: file:///config/cloud/ts-config.json
+    - extensionType: as3
+      type: url
+      value: file:///config/cloud/as3-shared.json
     - extensionType: as3
       type: url
       value: file:///config/cloud/as3-juiceshop.json
-    - extensionType: as3
-      type: url
-      value: file:///config/cloud/as3-dvwa.json
-    - extensionType: as3
-      type: url
-      value: file:///config/cloud/as3-hackazon.json      
 EOF
 
 echo "*** Downloading runtime init ***"

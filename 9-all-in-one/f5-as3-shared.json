@@ -1,0 +1,131 @@
+{
+    "$schema": "https://raw.githubusercontent.com/F5Networks/f5-appsvcs-extension/master/schema/latest/as3-schema.json",
+    "class": "AS3",
+    "action": "deploy",
+    "logLevel": "debug",
+    "persist": true,
+    "declaration": {
+        "class": "ADC",
+        "schemaVersion": "3.40.0",
+        "Common": {
+            "class": "Tenant",
+            "Shared": {
+                "class": "Application",
+                "template": "shared",
+                
+                "telemetry_local_rule": {
+                    "remark": "iRule to redirect events to TS local listener",
+                    "class": "iRule",
+                    "iRule": "when CLIENT_ACCEPTED {\n  node 127.0.0.1 6514\n}"
+                },
+                "telemetry_local": {
+                    "remark": "VS to receive events from local BIG-IP",
+                    "class": "Service_TCP",
+                    "virtualAddresses": [
+                        "255.255.255.254"
+                    ],
+                    "virtualPort": 6514,
+                    "iRules": [
+                        "telemetry_local_rule"
+                    ]
+                },
+
+                "telemetry_pool": {
+                    "remark": "Pool used by HSL and traffic events to send them to TS Listener",
+                    "class": "Pool",
+                    "members": [
+                        {
+                            "enable": true,
+                            "serverAddresses": [
+                                "255.255.255.254"
+                            ],
+                            "servicePort": 6514
+                        }
+                    ],
+                    "monitors": [
+                        {
+                            "bigip": "/Common/tcp"
+                        }
+                    ]
+                },
+
+                "telemetry_hsl": {
+                    "remark": "HSL used modules to export events to TS Listener",
+                    "class": "Log_Destination",
+                    "type": "remote-high-speed-log",
+                    "protocol": "tcp",
+                    "pool": {
+                        "use": "telemetry_pool"
+                    }
+                },
+                "telemetry_formatted": {
+                    "class": "Log_Destination",
+                    "type": "splunk",
+                    "forwardTo": {
+                        "use": "telemetry_hsl"
+                    }
+                },
+                "telemetry_publisher": {
+                    "class": "Log_Publisher",
+                    "destinations": [
+                        {
+                            "use": "telemetry_formatted"
+                        }
+                    ]
+                },
+
+                "telemetry_traffic_log_profile": {
+                    "class": "Traffic_Log_Profile",
+                    "requestSettings": {
+                        "requestEnabled": true,
+                        "requestProtocol": "mds-tcp",
+                        "requestPool": {
+                            "use": "telemetry_pool"
+                        },
+                        "requestTemplate": "event_source=\"request_logging\",hostname=\"$BIGIP_HOSTNAME\",client_ip=\"$CLIENT_IP\",server_ip=\"$SERVER_IP\",http_method=\"$HTTP_METHOD\",http_uri=\"$HTTP_URI\",virtual_name=\"$VIRTUAL_NAME\",event_timestamp=\"$DATE_HTTP\""
+                    },
+                    "responseSettings": {
+                        "responseEnabled": true,
+                        "responseProtocol": "mds-tcp",
+                        "responsePool": {
+                            "use": "telemetry_pool"
+                        },
+                        "responseTemplate": "event_source=\"response_logging\",hostname=\"$BIGIP_HOSTNAME\",client_ip=\"$CLIENT_IP\",server_ip=\"$SERVER_IP\",http_method=\"$HTTP_METHOD\",http_uri=\"$HTTP_URI\",virtual_name=\"$VIRTUAL_NAME\",event_timestamp=\"$DATE_HTTP\",http_statcode=\"$HTTP_STATCODE\",http_status=\"$HTTP_STATUS\",response_ms=\"$RESPONSE_MSECS\""
+                    }
+                },
+
+                "telemetry_afm_security_log_profile": {
+                    "class": "Security_Log_Profile",
+                    "network": {
+                        "publisher": {
+                            "use": "telemetry_publisher"
+                        },
+                        "logRuleMatchAccepts": false,
+                        "logRuleMatchRejects": true,
+                        "logRuleMatchDrops": true,
+                        "logIpErrors": true,
+                        "logTcpErrors": true,
+                        "logTcpEvents": true
+                    }
+                },
+
+                "telemetry_asm_security_log_profile": {
+                    "class": "Security_Log_Profile",
+                    "application": {
+                        "localStorage": false,
+                        "remoteStorage": "splunk",
+                        "servers": [
+                            {
+                                "address": "255.255.255.254",
+                                "port": "6514"
+                            }
+                        ],
+                        "storageFilter": {
+                            "requestType": "all"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
