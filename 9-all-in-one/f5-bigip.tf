@@ -2,14 +2,18 @@
 # Setup Onboarding scripts
 locals {
 
-  runtime-init-vars = {
-    do-file       = local.do-file
-    ts-config     = local.ts-file
-    as3-shared    = local.as3-shared-file
-    as3-juiceshop = local.as3-juiceshop-file
-    mgmt-cidr     = var.mgmt_cidr
-    mgmt-self     = var.bigip_mgmt_self
-    mgmt-gateway  = google_compute_subnetwork.mgmt_subnet.gateway_address
+  runtime-init-script-vars = {
+    do-file           = local.do-file
+    ts-config         = local.ts-file
+    as3-shared        = local.as3-shared-file
+    as3-juiceshop     = local.as3-juiceshop-file
+    runtime-init-conf = local.runtime-init-conf-file
+  }
+
+  runtime-init-conf-vars = {
+    mgmt-cidr    = var.mgmt_cidr
+    mgmt-self    = var.bigip_mgmt_self
+    mgmt-gateway = google_compute_subnetwork.mgmt_subnet.gateway_address
   }
 
   do-vars = {
@@ -25,7 +29,7 @@ locals {
   }
 
   ts-vars = {
-    ts_es_host = var.ts-host
+    ts_es_host     = var.ts-host
     ts_es_username = var.ts-username
     ts_es_password = var.ts-password
   }
@@ -42,11 +46,12 @@ locals {
     network_dos_vectors = local.dos-network-vectors-settings
   }
 
-  runtime-init-file  = templatefile("${path.module}/f5-runtime-init-script.sh.tftpl", local.runtime-init-vars)
-  do-file            = templatefile("${path.module}/f5-do.json.tftpl", local.do-vars)
-  ts-file            = templatefile("${path.module}/f5-ts.json.tftpl", local.ts-vars)
-  as3-shared-file    = file("${path.module}/f5-as3-shared.json")
-  as3-juiceshop-file = templatefile("${path.module}/f5-as3-tls-sd-waf-ts.json.tftpl", local.juiceshop-vars)
+  runtime-init-script-file = templatefile("${path.module}/f5-runtime-init-script.sh.tftpl", local.runtime-init-script-vars)
+  runtime-init-conf-file   = templatefile("${path.module}/f5-runtime-init-conf.yaml.tftpl", local.runtime-init-conf-vars)
+  do-file                  = templatefile("${path.module}/f5-do.json.tftpl", local.do-vars)
+  ts-file                  = templatefile("${path.module}/f5-ts.json.tftpl", local.ts-vars)
+  as3-shared-file          = file("${path.module}/f5-as3-shared.json")
+  as3-juiceshop-file       = templatefile("${path.module}/f5-as3-tls-sd-waf-ts.json.tftpl", local.juiceshop-vars)
 }
 
 # Create F5 BIG-IP VMs
@@ -90,7 +95,7 @@ resource "google_compute_instance" "f5_bigip" {
 
   metadata = {
     serial-port-enable = true
-    startup-script     = local.runtime-init-file
+    startup-script     = local.runtime-init-script-file
   }
 
   service_account {

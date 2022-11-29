@@ -1,0 +1,47 @@
+controls:
+  logLevel: info
+  logFilename: /var/log/cloud/bigIpRuntimeInit.log
+bigip_ready_enabled:
+  - name: management_network_settings
+    type: inline
+    commands:
+      - tmsh modify sys db provision.1nicautoconfig value disable
+      - tmsh modify sys global-settings mgmt-dhcp disabled
+      - tmsh delete sys management-route all
+      - tmsh delete sys management-ip all
+      - tmsh create sys management-ip ${mgmt-self}/32
+      - tmsh create sys management-route mgmt_gw network ${mgmt-gateway}/32 type interface
+      - tmsh create sys management-route mgmt_net network ${mgmt-cidr} gateway ${mgmt-gateway}
+      - tmsh create sys management-route default gateway ${mgmt-gateway}
+  - name: gcp_settings
+    type: inline
+    commands:
+      - tmsh modify sys dns name-servers add { 169.254.169.254 }
+extension_packages:
+  install_operations:
+    - extensionType: do
+      extensionVersion: 1.33.0
+    - extensionType: as3
+      extensionVersion: 3.40.0
+    - extensionType: ts
+      extensionVersion: 1.32.0
+extension_services:
+  service_operations:
+    - extensionType: do
+      type: url
+      value: file:///config/cloud/do.json
+    - extensionType: ts
+      type: url
+      value: file:///config/cloud/ts-config.json
+    - extensionType: as3
+      type: url
+      value: file:///config/cloud/as3-shared.json
+    - extensionType: as3
+      type: url
+      value: file:///config/cloud/as3-juiceshop.json
+post_onboard_enabled:
+  - name: config_avr_ts
+    type: inline
+    commands:
+      - tmsh modify sys db tmm.tcl.rule.node.allow_loopback_addresses value true
+      - tmsh modify analytics global-settings { external-logging-publisher /Common/Shared/telemetry_publisher offbox-protocol hsl use-offbox enabled }

@@ -5,11 +5,11 @@ terraform {
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "~> 4.43"
+      version = "~> 4.44.1"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
-      version = "~> 4.43"
+      version = "~> 4.44.1"
     }
   }
 }
@@ -29,7 +29,7 @@ provider "google-beta" {
 
 #Other
 data "http" "myip" {
-  url = "https://ifconfig.io/ip"
+  url = "https://text.ipv4.wtfismyip.com/"
 
   request_headers = {
     Accept = "text/plain"
