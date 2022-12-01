@@ -12,8 +12,8 @@ variable "external_cidr" { default = "10.1.10.0/24" }
 variable "internal_cidr" { default = "10.1.20.0/24" }
 
 #Server
-variable "server_machine" {}
-variable "server_image" {}
+variable "server_machine" { default = "e2-medium" }
+variable "server_image" { default = "projects/cos-cloud/global/images/cos-101-17162-40-34" }
 
 #BIG-IP
 variable "bigip_name" { default = "bigip" }

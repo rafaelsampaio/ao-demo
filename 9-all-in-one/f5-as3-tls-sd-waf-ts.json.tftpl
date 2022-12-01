@@ -92,7 +92,7 @@
                         {
                             "servicePort": ${app_node_port},
                             "addressDiscovery": "gce",
-                            "updateInterval": 10,
+                            "updateInterval": 60,
                             "tagKey": "application",
                             "tagValue": "${app_tag}",
                             "addressRealm": "private",
@@ -142,7 +142,7 @@
                     "label": "${app_name}-app-dos",
                     "application": {
                         "botDefense": {
-                            "mode": "during-attacks"
+                            "mode": "off"
                         },
                         "botSignatures": {
                             "checkingEnabled": true

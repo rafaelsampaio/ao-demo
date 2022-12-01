@@ -68,7 +68,7 @@ resource "google_compute_firewall" "mgmt_allow_myip" {
   }
   allow {
     protocol = "tcp"
-    ports    = ["22", "443", "8443"]
+    ports    = ["22", "443" ]
   }
 }
 
