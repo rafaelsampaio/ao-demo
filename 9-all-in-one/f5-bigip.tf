@@ -29,9 +29,11 @@ locals {
   }
 
   ts-vars = {
-    ts_es_host     = var.ts-host
-    ts_es_username = var.ts-username
-    ts_es_password = var.ts-password
+    logstash_ts_host  = var.logstash-ts-host
+    logstash_waf_host = var.logstash-waf-host
+    es_host           = var.es-host
+    es_username       = var.es-username
+    es_password       = var.es-password
   }
 
   juiceshop-vars = {
