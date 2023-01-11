@@ -26,7 +26,6 @@ variable "bigip_external_self" { default = "10.1.10.245" }
 variable "bigip_internal_self" { default = "10.1.20.245" }
 
 #Logstash
-variable "logstash-waf-host" {}
 variable "logstash-ts-host" {}
 
 #ElasticSearch

@@ -11,63 +11,71 @@
         "class": "Telemetry_System",
         "trace": true
     },
-    "pullConsumerSystemPoller": {
+    "pullSystemPoller": {
         "class": "Telemetry_System_Poller",
         "interval": 0,
         "actions": [
             {
-                "excludeData": {},
-                "locations": {
-                    "serverSslProfiles": {
-                        "/Common/*": true
-                    }
-                }
-            },
-            {
-                "excludeData": {},
-                "locations": {
-                    "clientSslProfiles": {
-                        "/Common/*": true
-                    }
-                }
-            },
-            {
-                "excludeData": {},
+                "includeData": {},
                 "locations": {
                     "virtualServers": {
-                        "/Common/*": true
-                    }
-                }
-            },
-            {
-                "excludeData": {},
-                "locations": {
+                        ".*": {
+                            "clientside": true,
+                            "serverside": true,
+                            "availabilityState": true,
+                            "enabledState": true,
+                            "isAvailable": true,
+                            "isEnabled": true,
+                            "status": true,
+                            "totRequests": true
+                        }
+                    },
                     "pools": {
-                        "/Common/*": true
+                        ".*": {
+                            "activeMemberCnt": true,
+                            "availabilityState": true,
+                            "enabledState": true,
+                            "isAvailable": true,
+                            "isEnabled": true,
+                            "serverside": true,
+                            "status": true,
+                            "totRequests": true,
+                            "members": {
+                                ".*": {
+                                    "availabilityState": true,
+                                    "enabledState": true,
+                                    "monitorStatus": true,
+                                    "serverside": true,
+                                    "status": true,
+                                    "totRequests": true
+                                }
+                            }
+                        }
+                    },
+                    "sslCerts": {
+                        ".*": {
+                            "expirationDate": true,
+                            "expirationString": true,
+                            "issuer": true,
+                            "subject": true
+                        }
                     }
                 }
             },
             {
                 "excludeData": {},
                 "locations": {
-                    "iRules": {
-                        "/Common/*": true
-                    }
-                }
-            },
-            {
-                "excludeData": {},
-                "locations": {
-                    "system": {
-                        "provisioning": true
-                    }
-                }
-            },
-            {
-                "excludeData": {},
-                "locations": {
-                    "system": {
-                        "diskLatency": true
+                    "sslCerts": {
+                        "ca-bundle": true,
+                        "default": true,
+                        "f5-ca-bundle": true,
+                        "f5-irule": true
+                    },
+                    "virtualServers": {
+                        "/Common/": true
+                    },
+                    "pools": {
+                        "/Common/": true
                     }
                 }
             }
@@ -77,146 +85,104 @@
     "prometheus": {
         "class": "Telemetry_Pull_Consumer",
         "type": "Prometheus",
-        "systemPoller": "pullConsumerSystemPoller",
+        "systemPoller": "pullSystemPoller",
         "trace": true
     },
-    "stats": {
+    "push-stats": {
         "class": "Telemetry_Namespace",
         "telemetrySystem": {
             "class": "Telemetry_System",
             "systemPoller": [
-                "pushConsumerSystemPoller"
+                "pushSystemPoller"
             ],
             "trace": true
         },
-        "pushConsumerSystemPoller": {
+        "pushSystemPoller": {
             "class": "Telemetry_System_Poller",
-            "interval": 300,
+            "interval": 60,
             "actions": [
                 {
-                    "excludeData": {},
+                    "includeData": {},
                     "locations": {
-                        "serverSslProfiles": {
-                            "/Common/*": true
-                        }
-                    }
-                },
-                {
-                    "excludeData": {},
-                    "locations": {
-                        "clientSslProfiles": {
-                            "/Common/*": true
-                        }
+                        "virtualServers": {
+                            ".*": {
+                                "clientside": true,
+                                "serverside": true,
+                                "availabilityState": true,
+                                "enabledState": true,
+                                "isAvailable": true,
+                                "isEnabled": true,
+                                "status": true,
+                                "totRequests": true
+                            }
+                        },
+                        "pools": {
+                            ".*": {
+                                "activeMemberCnt": true,
+                                "availabilityState": true,
+                                "enabledState": true,
+                                "isAvailable": true,
+                                "isEnabled": true,
+                                "serverside": true,
+                                "status": true,
+                                "totRequests": true,
+                                "members": {
+                                    ".*": {
+                                        "availabilityState": true,
+                                        "enabledState": true,
+                                        "monitorStatus": true,
+                                        "serverside": true,
+                                        "status": true,
+                                        "totRequests": true
+                                    }
+                                }
+                            }
+                        },
+                        "sslCerts": {
+                            ".*": {
+                                "expirationDate": true,
+                                "expirationString": true,
+                                "issuer": true,
+                                "subject": true
+                            }
+                        },
+                        "telemetryEventCategory": true,
+                        "telemetryServiceInfo": true
                     }
                 },
                 {
                     "excludeData": {},
                     "locations": {
                         "virtualServers": {
-                            "/Common/*": true
-                        }
-                    }
-                },
-                {
-                    "excludeData": {},
-                    "locations": {
+                            "/Common/": true
+                        },
                         "pools": {
-                            "/Common/*": true
-                        }
-                    }
-                },
-                {
-                    "excludeData": {},
-                    "locations": {
-                        "iRules": {
-                            "/Common/*": true
-                        }
-                    }
-                },
-                {
-                    "excludeData": {},
-                    "locations": {
-                        "system": {
-                            "provisioning": true
-                        }
-                    }
-                },
-                {
-                    "excludeData": {},
-                    "locations": {
-                        "system": {
-                            "diskLatency": true
+                            "/Common/": true
+                        },
+                        "sslCerts": {
+                            "ca-bundle": true,
+                            "f5-ca-bundle": true,
+                            "f5-irule": true
                         }
                     }
                 }
             ],
             "trace": true
         },
-        "elasticSearch": {
-            "class": "Telemetry_Consumer",
-            "type": "ElasticSearch",
-            "host": "${es_host}",
-            "index": "f5-ts-stats",
-            "port": 80,
-            "allowSelfSignedCert": true,
-            "apiVersion": "7.0",
-            "protocol": "http",
-            "trace": true,
-            "enable": false
-        },
         "logstash": {
             "class": "Telemetry_Consumer",
             "type": "Generic_HTTP",
             "host": "${logstash_ts_host}",
             "protocol": "http",
             "port": 80,
-            "path": "/",
-            "method": "POST",
             "headers": [
                 {
                     "name": "Content-Type",
                     "value": "application/json"
                 }
-            ]
-        }
-    },
-    "events": {
-        "class": "Telemetry_Namespace",
-        "telemetrySystem": {
-            "class": "Telemetry_System",
-            "trace": true
-        },
-        "eventListener": {
-            "class": "Telemetry_Listener",
-            "port": 6514,
-            "trace": true
-        },
-        "elasticSearch": {
-            "class": "Telemetry_Consumer",
-            "type": "ElasticSearch",
-            "host": "${es_host}",
-            "index": "f5-ts-events-raw",
-            "port": 80,
-            "allowSelfSignedCert": true,
-            "apiVersion": "7.0",
-            "protocol": "http",
+            ],
             "trace": true,
-            "enable": false
-        },
-        "logstash": {
-            "class": "Telemetry_Consumer",
-            "type": "Generic_HTTP",
-            "host": "${logstash_ts_host}",
-            "protocol": "http",
-            "port": 80,
-            "path": "/",
-            "method": "POST",
-            "headers": [
-                {
-                    "name": "Content-Type",
-                    "value": "application/json"
-                }
-            ]
+            "enable": true
         }
     }
 }
