@@ -3,7 +3,7 @@ data "template_file" "startup_script" {
 }
 
 resource "google_compute_instance" "app_juiceshop" {
-  count        = 1
+  count        = 2
   name         = "${var.prefix}-juiceshop-${count.index}"
   machine_type = var.server_machine
   zone         = var.gcp_zone

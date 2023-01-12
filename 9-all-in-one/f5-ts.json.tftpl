@@ -11,13 +11,20 @@
         "class": "Telemetry_System",
         "trace": true
     },
-    "pullSystemPoller": {
+    "pullConsumerSystemPoller": {
         "class": "Telemetry_System_Poller",
         "interval": 0,
         "actions": [
             {
                 "includeData": {},
                 "locations": {
+                    "system": {
+                        "hostname": true,
+                        "systemTimestamp": true,
+                        "tmm": true,
+                        "throughputPerformance": true,
+                        "connectionsPerformance": true
+                    },
                     "virtualServers": {
                         ".*": {
                             "clientside": true,
@@ -59,23 +66,40 @@
                             "issuer": true,
                             "subject": true
                         }
-                    }
+                    },
+                    "telemetryEventCategory": true,
+                    "telemetryServiceInfo": true
                 }
             },
             {
                 "excludeData": {},
                 "locations": {
-                    "sslCerts": {
-                        "ca-bundle": true,
-                        "default": true,
-                        "f5-ca-bundle": true,
-                        "f5-irule": true
+                    "system": {
+                        "throughputPerformance": {
+                            ".*": {
+                                "name": true
+                            }
+                        },
+                        "connectionsPerformance": {
+                            ".*": {
+                                "name": true
+                            }
+                        }
                     },
                     "virtualServers": {
                         "/Common/": true
                     },
                     "pools": {
                         "/Common/": true
+                    },
+                    "sslCerts": {
+                        "default": true,
+                        "ca-bundle": true,
+                        "f5-ca-bundle": true,
+                        "f5-irule": true,
+                        ".*": {
+                            "expirationDate": true
+                        }
                     }
                 }
             }
@@ -85,25 +109,32 @@
     "prometheus": {
         "class": "Telemetry_Pull_Consumer",
         "type": "Prometheus",
-        "systemPoller": "pullSystemPoller",
+        "systemPoller": "pullConsumerSystemPoller",
         "trace": true
     },
-    "push-stats": {
+    "stats": {
         "class": "Telemetry_Namespace",
         "telemetrySystem": {
             "class": "Telemetry_System",
             "systemPoller": [
-                "pushSystemPoller"
+                "pushConsumerSystemPoller"
             ],
             "trace": true
         },
-        "pushSystemPoller": {
+        "pushConsumerSystemPoller": {
             "class": "Telemetry_System_Poller",
             "interval": 60,
             "actions": [
                 {
                     "includeData": {},
                     "locations": {
+                        "system": {
+                            "hostname": true,
+                            "systemTimestamp": true,
+                            "tmm": true,
+                            "throughputPerformance": true,
+                            "connectionsPerformance": true
+                        },
                         "virtualServers": {
                             ".*": {
                                 "clientside": true,
@@ -153,6 +184,18 @@
                 {
                     "excludeData": {},
                     "locations": {
+                        "system": {
+                            "throughputPerformance": {
+                                ".*": {
+                                    "name": true
+                                }
+                            },
+                            "connectionsPerformance": {
+                                ".*": {
+                                    "name": true
+                                }
+                            }
+                        },
                         "virtualServers": {
                             "/Common/": true
                         },
@@ -160,13 +203,44 @@
                             "/Common/": true
                         },
                         "sslCerts": {
+                            "default": true,
                             "ca-bundle": true,
                             "f5-ca-bundle": true,
-                            "f5-irule": true
+                            "f5-irule": true,
+                            ".*": {
+                                "expirationDate": true
+                            }
                         }
                     }
                 }
             ],
+            "trace": true
+        },
+        "logstash": {
+            "class": "Telemetry_Consumer",
+            "type": "Generic_HTTP",
+            "host": "${logstash_ts_host}",
+            "protocol": "http",
+            "port": 80,
+            "headers": [
+                {
+                    "name": "Content-Type",
+                    "value": "application/json"
+                }
+            ],
+            "trace": true,
+            "enable": true
+        }
+    },
+    "events": {
+        "class": "Telemetry_Namespace",
+        "telemetrySystem": {
+            "class": "Telemetry_System",
+            "trace": true
+        },
+        "eventListener": {
+            "class": "Telemetry_Listener",
+            "port": 6514,
             "trace": true
         },
         "logstash": {
