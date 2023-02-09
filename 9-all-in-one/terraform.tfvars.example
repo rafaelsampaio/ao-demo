@@ -2,22 +2,15 @@
 #Google Environment
 prefix       = "DEMO"
 gcp_project  = ""
-gcp_region   = ""
-gcp_zone     = ""
+gcp_region   = "southamerica-east1"
+gcp_zone     = "southamerica-east1-a"
 gcp_svc_acct = ""
 
-#Server
-server_machine    = ""
-server_image      = ""
-
 # BIG-IP
-bigip_passwd   = ""
-bigip_image    = ""
-bigip_machine  = ""
-bigip_timezone = ""
+bigip_passwd = ""
+bigip_timezone = "America/Recife"
 
 # Logstash
-logstash-waf-host = ""
 logstash-ts-host  = ""
 
 # ElasticSearch
@@ -26,6 +19,6 @@ es-username = ""
 es-password = ""
 
 # Labels
-tag_environment = ""
-tag_owner       = ""
-tag_group       = ""
+tag_environment = "demo"
+tag_owner       = "demo"
+tag_group       = "aot"

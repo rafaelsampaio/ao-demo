@@ -24,6 +24,10 @@
                     "serverTLS": "${app_name}-tls",
                     "pool": "${app_name}-pool-sd",
 
+                    "profileHTTP": {
+                        "use": "${app_name}-http-profile"
+                    },
+
                     "profileAnalytics": {
                         "use": "${app_name}-analytics-http"
                     },
@@ -101,6 +105,10 @@
                     ]
                 },
 
+                "${app_name}-http-profile": {
+                    "class": "HTTP_Profile"
+                },
+
                 "${app_name}-analytics-http": {
                     "class": "Analytics_Profile",
                     "remark": "Enable application statistics collections to AVR",
@@ -137,7 +145,7 @@
                 },
 
                 "${app_name}-network-dos": {
-                    "class": "DOS_Profile",                    
+                    "class": "DOS_Profile",
                     "remark": "Network DoS protection",
                     "label": "${app_name}-app-dos",
                     "application": {
