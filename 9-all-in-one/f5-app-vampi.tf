@@ -1,20 +1,21 @@
 locals {
-  app_labels_juiceshop = {
+  app_labels_vampi = {
     owner       = "${var.prefix}-${var.tag_owner}"
     environment = "${var.prefix}-${var.tag_environment}"
     group       = "${var.prefix}-${var.tag_group}"
-    application = "${var.prefix}-juiceshop"
+    application = "${var.prefix}-vampi"
     provider    = "${var.prefix}-terraform"
   }
+
 }
 
-resource "google_compute_instance" "app_juiceshop" {
+resource "google_compute_instance" "app_vampi" {
   count        = 1
-  name         = "${var.prefix}-juiceshop-${count.index}"
+  name         = "${var.prefix}-vampi-${count.index}"
   machine_type = var.server_machine
   zone         = var.gcp_zone
 
-  labels = local.app_labels_juiceshop
+  labels = local.app_labels_vampi
 
   boot_disk {
     initialize_params {
@@ -36,38 +37,38 @@ resource "google_compute_instance" "app_juiceshop" {
 
 }
 
-resource "google_compute_address" "juiceshop" {
+resource "google_compute_address" "vampi" {
   provider = google-beta
-  name     = "${var.prefix}-juiceshop-address"
+  name     = "${var.prefix}-vampi-address"
   labels   = local.general_labels
 }
 
-resource "google_compute_target_instance" "juiceshop_target_bigip" {
+resource "google_compute_target_instance" "vampi_target_bigip" {
   provider = google-beta
-  name     = "${var.prefix}-juiceshop-target-bigip"
+  name     = "${var.prefix}-vampi-target-bigip"
   network  = replace(google_compute_network.external_net.self_link, "v1", "beta")
   instance = google_compute_instance.f5_bigip.id
 }
 
-resource "google_compute_forwarding_rule" "juiceshop_fwd_rule" {
+resource "google_compute_forwarding_rule" "vampi_fwd_rule" {
   provider   = google-beta
-  name       = "${var.prefix}-juiceshop-fwd-rule"
-  target     = google_compute_target_instance.juiceshop_target_bigip.id
-  ip_address = google_compute_address.juiceshop.address
+  name       = "${var.prefix}-vampi-fwd-rule"
+  target     = google_compute_target_instance.vampi_target_bigip.id
+  ip_address = google_compute_address.vampi.address
   all_ports  = true
   labels     = local.general_labels
 }
 
-resource "tls_private_key" "juiceshop_key" {
+resource "tls_private_key" "vampi_key" {
   algorithm   = "ECDSA"
   ecdsa_curve = "P384"
 }
 
-resource "tls_self_signed_cert" "juiceshop_cert" {
-  private_key_pem = tls_private_key.juiceshop_key.private_key_pem
+resource "tls_self_signed_cert" "vampi_cert" {
+  private_key_pem = tls_private_key.vampi_key.private_key_pem
 
   subject {
-    common_name         = "juiceshop.example.com"
+    common_name         = "vampi.example.com"
     organization        = "F5, Inc."
     organizational_unit = "Automation & Orchestration Toolchain Demo"
   }

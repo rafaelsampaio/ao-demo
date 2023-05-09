@@ -17,6 +17,7 @@
         "actions": [
             {
                 "includeData": {},
+                "enable": true,
                 "locations": {
                     "system": {
                         "hostname": true,
@@ -59,6 +60,22 @@
                             }
                         }
                     },
+                    "httpProfiles": {
+                        ".*": {
+                            ".*Reqs": true,
+                            ".*Resp": true
+                        }
+                    },
+                    ".*SslProfiles": {
+                        ".*": {
+                            "cipherUses.": true,
+                            "decrypted": true,
+                            "encrypted": true,
+                            "protocolUses": true,
+                            "tot": true,
+                            "current": true
+                        }
+                    },
                     "sslCerts": {
                         ".*": {
                             "expirationDate": true,
@@ -73,6 +90,7 @@
             },
             {
                 "excludeData": {},
+                "enable": true,
                 "locations": {
                     "system": {
                         "throughputPerformance": {
@@ -90,6 +108,12 @@
                         "/Common/": true
                     },
                     "pools": {
+                        "/Common/": true
+                    },
+                    "httpProfiles": {
+                        "/Common/": true
+                    },
+                    ".*SslProfiles": {
                         "/Common/": true
                     },
                     "sslCerts": {
@@ -127,6 +151,7 @@
             "actions": [
                 {
                     "includeData": {},
+                    "enable": true,
                     "locations": {
                         "system": {
                             "hostname": true,
@@ -183,6 +208,7 @@
                 },
                 {
                     "excludeData": {},
+                    "enable": true,
                     "locations": {
                         "system": {
                             "throughputPerformance": {
@@ -220,8 +246,7 @@
             "class": "Telemetry_Consumer",
             "type": "Generic_HTTP",
             "host": "${logstash_ts_host}",
-            "protocol": "http",
-            "port": 80,
+            "protocol": "https",
             "headers": [
                 {
                     "name": "Content-Type",
@@ -247,8 +272,7 @@
             "class": "Telemetry_Consumer",
             "type": "Generic_HTTP",
             "host": "${logstash_ts_host}",
-            "protocol": "http",
-            "port": 80,
+            "protocol": "https",
             "headers": [
                 {
                     "name": "Content-Type",

@@ -3,11 +3,13 @@
 locals {
 
   runtime-init-script-vars = {
-    do-file           = local.do-file
-    ts-config         = local.ts-file
-    as3-shared        = local.as3-shared-file
-    as3-juiceshop     = local.as3-juiceshop-file
-    runtime-init-conf = local.runtime-init-conf-file
+    do-file              = local.do-file
+    ts-config            = local.ts-file
+    as3-shared           = local.as3-shared-file
+    as3-juiceshop        = local.as3-juiceshop-file
+    as3-vampi            = local.as3-vampi-file
+    runtime-init-conf    = local.runtime-init-conf-file
+    runtime-init-version = "1.6.1"
   }
 
   runtime-init-conf-vars = {
@@ -29,10 +31,10 @@ locals {
   }
 
   ts-vars = {
-    logstash_ts_host  = var.logstash-ts-host
-    es_host           = var.es-host
-    es_username       = var.es-username
-    es_password       = var.es-password
+    logstash_ts_host = var.logstash-ts-host
+    es_host          = var.es-host
+    es_username      = var.es-username
+    es_password      = var.es-password
   }
 
   juiceshop-vars = {
@@ -47,20 +49,35 @@ locals {
     network_dos_vectors = local.dos-network-vectors-settings
   }
 
+  vampi-vars = {
+    app_tag             = "${var.prefix}-vampi"
+    app_region          = var.gcp_region
+    app_certificate     = replace(tls_self_signed_cert.vampi_cert.cert_pem, "/\n/", "\\n")
+    app_private_key     = replace(tls_private_key.vampi_key.private_key_pem, "/\n/", "\\n")
+    app_tenant          = "vampi"
+    app_name            = "vampi"
+    app_address         = google_compute_address.vampi.address
+    app_node_port       = 8005
+    network_dos_vectors = local.dos-network-vectors-settings
+  }
+
   runtime-init-script-file = templatefile("${path.module}/f5-runtime-init-script.sh.tftpl", local.runtime-init-script-vars)
   runtime-init-conf-file   = templatefile("${path.module}/f5-runtime-init-conf.yaml.tftpl", local.runtime-init-conf-vars)
   do-file                  = templatefile("${path.module}/f5-do.json.tftpl", local.do-vars)
   ts-file                  = templatefile("${path.module}/f5-ts.json.tftpl", local.ts-vars)
   as3-shared-file          = file("${path.module}/f5-as3-shared.json")
   as3-juiceshop-file       = templatefile("${path.module}/f5-as3-tls-sd-waf-ts.json.tftpl", local.juiceshop-vars)
+  as3-vampi-file           = templatefile("${path.module}/f5-as3-tls-sd-waf-ts.json.tftpl", local.vampi-vars)
 }
 
 # Create F5 BIG-IP VMs
 resource "google_compute_instance" "f5_bigip" {
-  name           = "${var.prefix}-${var.bigip_name}"
-  machine_type   = var.bigip_machine
-  zone           = var.gcp_zone
-  can_ip_forward = true
+  name         = "${var.prefix}-${var.bigip_name}"
+  machine_type = var.bigip_machine
+  zone         = var.gcp_zone
+
+  #Ensure that IP forwarding is not enabled on Instances
+  can_ip_forward = false
 
   labels = local.general_labels
 
@@ -95,8 +112,14 @@ resource "google_compute_instance" "f5_bigip" {
   }
 
   metadata = {
-    serial-port-enable = true
-    startup-script     = local.runtime-init-script-file
+    startup-script = local.runtime-init-script-file
+
+    #Ensure 'Enable connecting to serial ports' is not enabled for VM Instance
+    serial-port-enable = false
+    #Ensure "Block Project-wide SSH keys" enabled for VM instances
+    block-project-ssh-keys = true
+    #Ensure oslogin is enabled for a Project
+    enable-oslogin = true
   }
 
   service_account {

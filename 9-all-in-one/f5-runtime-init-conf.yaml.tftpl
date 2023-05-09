@@ -20,9 +20,9 @@ bigip_ready_enabled:
 extension_packages:
   install_operations:
     - extensionType: do
-      extensionVersion: 1.33.0
+      extensionVersion: 1.37.0
     - extensionType: as3
-      extensionVersion: 3.40.0
+      extensionVersion: 3.44.0
     - extensionType: ts
       extensionVersion: 1.32.0
 extension_services:
@@ -39,9 +39,25 @@ extension_services:
     - extensionType: as3
       type: url
       value: file:///config/cloud/as3-juiceshop.json
+    - extensionType: as3
+      type: url
+      value: file:///config/cloud/as3-vampi.json
 post_onboard_enabled:
   - name: config_avr_ts
     type: inline
     commands:
       - tmsh modify sys db tmm.tcl.rule.node.allow_loopback_addresses value true
       - tmsh modify analytics global-settings { external-logging-publisher /Common/Shared/telemetry_publisher offbox-protocol hsl use-offbox enabled }
+  - name: autoupdate
+    type: inline
+    commands:
+      - tmsh modify mgmt tm live-update asm-attack-signatures install-schedule applyAtAllTimes true
+      - tmsh modify mgmt tm live-update asm-attack-signatures install-schedule frequency "real-time"
+      - tmsh modify mgmt tm live-update bot-signatures install-schedule applyAtAllTimes true
+      - tmsh modify mgmt tm live-update bot-signatures install-schedule frequency "real-time"
+      - tmsh modify mgmt tm live-update browser-challenges install-schedule applyAtAllTimes true
+      - tmsh modify mgmt tm live-update browser-challenges install-schedule frequency "real-time"
+      - tmsh modify mgmt tm live-update server-technologies install-schedule applyAtAllTimes true
+      - tmsh modify mgmt tm live-update server-technologies install-schedule frequency "real-time"
+
+

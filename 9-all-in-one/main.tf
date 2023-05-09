@@ -1,15 +1,15 @@
 #Main
 #Terraform Version Pinning
 terraform {
-  required_version = "~> 1.3.0"
+  required_version = "~> 1.4.0"
   required_providers {
     google = {
       source  = "hashicorp/google"
-      version = "~> 4.44.1"
+      version = "~> 4.64.0"
     }
     google-beta = {
       source  = "hashicorp/google-beta"
-      version = "~> 4.44.1"
+      version = "~> 4.64.0"
     }
   }
 }
@@ -37,17 +37,14 @@ data "http" "myip" {
 }
 
 locals {
-  app_labels_juiceshop = {
-    owner       = "${var.prefix}-${var.tag_owner}"
-    environment = "${var.prefix}-${var.tag_environment}"
-    group       = "${var.prefix}-${var.tag_group}"
-    application = "${var.prefix}-juiceshop"
-    provider    = "${var.prefix}-terraform"
-  }
   general_labels = {
     owner       = "${var.prefix}-${var.tag_owner}"
     environment = "${var.prefix}-${var.tag_environment}"
     group       = "${var.prefix}-${var.tag_group}"
     provider    = "${var.prefix}-terraform"
   }
+}
+
+data "template_file" "startup_script" {
+  template = file("${path.module}/app-startup-script.sh")
 }

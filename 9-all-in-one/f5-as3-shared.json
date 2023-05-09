@@ -6,13 +6,13 @@
     "persist": true,
     "declaration": {
         "class": "ADC",
-        "schemaVersion": "3.40.0",
+        "schemaVersion": "3.44.0",
         "Common": {
             "class": "Tenant",
             "Shared": {
                 "class": "Application",
                 "template": "shared",
-                
+
                 "telemetry_local_rule": {
                     "remark": "iRule to redirect events to TS local listener",
                     "class": "iRule",

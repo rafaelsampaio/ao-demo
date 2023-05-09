@@ -33,13 +33,18 @@ cat << 'EOF' > /config/cloud/as3-juiceshop.json
 ${as3-juiceshop}
 EOF
 
+echo "*** Creating AS3 VAmPI file ***"
+cat << 'EOF' > /config/cloud/as3-vampi.json
+${as3-vampi}
+EOF
+
 echo "*** Creating runtime init with YAML file  ***"
 cat << 'EOF' > /config/cloud/runtime-init-conf.yaml
 ${runtime-init-conf}
 EOF
 
 echo "*** Downloading runtime init ***"
-curl https://cdn.f5.com/product/cloudsolutions/f5-bigip-runtime-init/v1.5.1/dist/f5-bigip-runtime-init-1.5.1-1.gz.run -o f5-bigip-runtime-init-1.5.1-1.gz.run && bash f5-bigip-runtime-init-1.5.1-1.gz.run -- '--cloud gcp'
+curl https://cdn.f5.com/product/cloudsolutions/f5-bigip-runtime-init/v${runtime-init-version}/dist/f5-bigip-runtime-init-${runtime-init-version}-1.gz.run -o f5-bigip-runtime-init-${runtime-init-version}-1.gz.run && bash f5-bigip-runtime-init-${runtime-init-version}-1.gz.run -- '--cloud gcp'
 
 echo "*** Running runtime init with YAML file ***"
 /usr/local/bin/f5-bigip-runtime-init --config-file /config/cloud/runtime-init-conf.yaml
